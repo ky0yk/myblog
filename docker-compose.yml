@@ -1,0 +1,31 @@
+version: "3"
+services:
+  app:
+    container_name: myapp
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./dist:/usr/src/app/dist
+    command: npm run dev
+    depends_on: 
+      - db
+    links: 
+      - db
+  db:
+    image: mysql:8.0
+    platform: linux/x86_64  # M1 Macの場合必要
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
