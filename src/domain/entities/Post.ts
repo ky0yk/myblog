@@ -8,12 +8,18 @@ export class Post {
     private title: Title;
     private content: Content;
     private authorId: UserId;
+    private isPublished: boolean;
 
     constructor(id: PostId, title: Title, content: Content, authorId: UserId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.authorId = authorId;
+        this.isPublished = false;
+    }
+
+    publish(): void {
+        this.isPublished = true;
     }
 
     getId(): PostId {
@@ -30,5 +36,9 @@ export class Post {
 
     getAuthorId(): UserId {
         return this.authorId;
+    }
+
+    getIsPublished(): boolean {
+        return this.isPublished;
     }
 }
