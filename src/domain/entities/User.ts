@@ -16,6 +16,10 @@ export class User {
         this.password = password;
     }
 
+    verifyPassword(inputPassword: Password):boolean {
+        return this.password.equals(inputPassword)
+    }
+
     getId(): UserId {
         return this.id;
     }
