@@ -6,15 +6,16 @@ import { Name } from "../../domain/vo/Name";
 import { Email } from "../../domain/vo/Email";
 import { Password } from "../../domain/vo/Password";
 
+
 export class UserRepository implements IUserRepository {
-    private prisma: PrismaClient;
+    private _prisma: PrismaClient;
 
     constructor() {
-        this.prisma = new PrismaClient();
+        this._prisma = new PrismaClient();
     }
 
     async find(id: UserId): Promise<User | null> {
-        const result = await this.prisma.user.findUnique({ where: {id: id.value} });
+        const result = await this._prisma.user.findUnique({ where: {id: id.value} });
 
         if (result == null) {
             return null;
@@ -29,7 +30,7 @@ export class UserRepository implements IUserRepository {
     }
 
     async findByEmail(email: Email): Promise<User | null> {
-        const result = await this.prisma.user.findUnique({ where: { email: email.value}})
+        const result = await this._prisma.user.findUnique({ where: { email: email.value}})
 
         if (result == null) {
             return null;
@@ -47,7 +48,7 @@ export class UserRepository implements IUserRepository {
     async save(user: User): Promise<void> {
         const {id , name, email, password } = user;
 
-        const result = await this.prisma.user.upsert({
+        const result = await this._prisma.user.upsert({
             where: {id: id.value},
             update: {name: name.value, email: email.value, password: password.value},
             create: { id: id.value, name: name.value, email: email.value, password: password.value }
