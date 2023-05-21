@@ -13,9 +13,9 @@ describe('User', () => {
         new Password('password'),
       );
 
-      expect(user.getId().getValue()).toEqual('1');
-      expect(user.getName().getValue()).toEqual('Test User');
-      expect(user.getEmail().getValue()).toEqual('test@example.com');
-      expect(user.getPassword().getValue()).toEqual('password');
+      expect(user.id.value).toEqual('1');
+      expect(user.name.value).toEqual('Test User');
+      expect(user.email.value).toEqual('test@example.com');
+      expect(user.password.value).toEqual('password');
     });
   });

@@ -1,15 +1,15 @@
 export class Email {
-    private value: string;
+    private _value: string;
 
     constructor(value: string) {
         if (!this.isValidEmail(value)) {
             throw new Error('Invalid email format');
         }
-        this.value = value;
+        this._value = value;
     }
 
-    getValue(): string {
-        return this.value;
+    get value(): string {
+        return this._value;
     }
 
     private isValidEmail(email: string): boolean {

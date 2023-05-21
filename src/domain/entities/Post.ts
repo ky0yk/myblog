@@ -4,41 +4,41 @@ import { Title } from "../vo/Title";
 import { UserId } from "../vo/UserId";
 
 export class Post {
-    private id: PostId;
-    private title: Title;
-    private content: Content;
-    private authorId: UserId;
-    private isPublished: boolean;
+    private _id: PostId;
+    private _title: Title;
+    private _content: Content;
+    private _authorId: UserId;
+    private _isPublished: boolean;
 
     constructor(id: PostId, title: Title, content: Content, authorId: UserId) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.authorId = authorId;
-        this.isPublished = false;
+        this._id = id;
+        this._title = title;
+        this._content = content;
+        this._authorId = authorId;
+        this._isPublished = false;
     }
 
     publish(): void {
-        this.isPublished = true;
+        this._isPublished = true;
     }
 
-    getId(): PostId {
-        return this.id;
+    get id() {
+        return this._id;
     }
 
-    getTitle(): Title {
-        return this.title;
+    get title() {
+        return this._title;
     }
 
-    getContent(): Content {
-        return this.content;
+    get content() {
+        return this._content;
     }
 
-    getAuthorId(): UserId {
-        return this.authorId;
+    get authorId() {
+        return this._authorId;
     }
 
-    getIsPublished(): boolean {
-        return this.isPublished;
+    get isPublished() {
+        return this._isPublished;
     }
 }

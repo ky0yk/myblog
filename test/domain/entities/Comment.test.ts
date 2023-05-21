@@ -14,10 +14,10 @@ describe('Comment', () => {
       new PostId('3'),
     );
 
-    expect(comment.getId().getValue()).toEqual('1');
-    expect(comment.getBody().getValue()).toEqual('Test Comment Body');
-    expect(comment.getAuthorId().getValue()).toEqual('2');
-    expect(comment.getPostId().getValue()).toEqual('3');
+    expect(comment.id.value).toEqual('1');
+    expect(comment.body.value).toEqual('Test Comment Body');
+    expect(comment.authorId.value).toEqual('2');
+    expect(comment.postId.value).toEqual('3');
   });
 
   // Add more tests for other methods and error cases

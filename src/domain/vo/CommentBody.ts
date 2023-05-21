@@ -1,14 +1,14 @@
 export class CommentBody {
-    private value: string;
+    private _value: string;
 
     constructor(value: string) {
         if (!value) {
             throw new Error('CommentBody must not be empty');
         }
-        this.value = value;
+        this._value = value;
     }
 
-    getValue(): string {
-        return this.value;
+    get value() {
+        return this._value;
     }
 }
