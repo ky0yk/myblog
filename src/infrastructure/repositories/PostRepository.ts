@@ -6,7 +6,7 @@ import { Title } from "../../domain/vo/Title";
 import { Content } from "../../domain/vo/Content";
 import { UserId } from "../../domain/vo/UserId";
 
-export class postRepository implements IPostRepository {
+export class PostRepository implements IPostRepository {
     private _prisma: PrismaClient;
 
     constructor(prisma: PrismaClient) {
@@ -23,7 +23,7 @@ export class postRepository implements IPostRepository {
         return new Post(
             new PostId(result.id),
             new Title(result.title),
-            new Content(result.title),
+            new Content(result.content),
             new UserId(result.authorId)
         );
 
