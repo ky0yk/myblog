@@ -10,8 +10,8 @@ import { Password } from "../../domain/vo/Password";
 export class UserRepository implements IUserRepository {
     private _prisma: PrismaClient;
 
-    constructor() {
-        this._prisma = new PrismaClient();
+    constructor(prisma: PrismaClient) {
+        this._prisma = prisma;
     }
 
     async find(id: UserId): Promise<User | null> {

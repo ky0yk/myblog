@@ -10,7 +10,7 @@ export class postRepository implements IPostRepository {
     private _prisma: PrismaClient;
 
     constructor(prisma: PrismaClient) {
-        this._prisma = new PrismaClient();
+        this._prisma = prisma;
     }
 
     async findById(id: PostId): Promise<Post | null> {
