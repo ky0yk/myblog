@@ -1,19 +1,19 @@
 export class Password {
-    private value: string;
+    private _value: string;
 
     constructor(value: string) {
         if (!this.isValidPassword(value)) {
             throw new Error('Invalid password format');
         }
-        this.value = value;
+        this._value = value;
     }
 
-    getValue(): String {
-        return this.value;
+    get value() {
+        return this._value;
     }
 
     equals(other: Password): boolean {
-        return this.value === other.getValue();
+        return this._value === other.value;
     }
 
     private isValidPassword(password: string): boolean {

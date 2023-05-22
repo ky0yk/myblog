@@ -1,9 +1,9 @@
 import { Password } from "../../../src/domain/vo/Password"
 
 describe("Password", () =>{
-    it("should create passowrd if it has at least 8 characters", () => {
+    it("should create password if it has at least 8 characters", () => {
         const password = new Password("goodpassword");
-        expect(password.getValue()).toBe("goodpassword");
+        expect(password.value).toBe("goodpassword");
     })
 
     it("should throw error if password lenght is less than 8 characters", () => {

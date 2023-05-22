@@ -24,7 +24,7 @@ describe('PostPublishingService', () => {
         const service = new PostPublishingService(mockPostRepo);
         await service.publish(new PostId("id"));
 
-        expect(testPost.getIsPublished()).toBeTruthy();
+        expect(testPost.isPublished).toBeTruthy();
         expect(mockPostRepo.save).toHaveBeenNthCalledWith(1, testPost);
     });
 

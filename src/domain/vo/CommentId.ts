@@ -1,14 +1,14 @@
 export class CommentId {
-    private value: string;
+    private _value: string;
 
     constructor(value: string) {
         if (!value) {
             throw new Error('CommentId must not be empty');
         }
-        this.value = value;
+        this._value = value;
     }
 
-    getValue(): string {
-        return this.value;
+    get value(): string {
+        return this._value;
     }
 }

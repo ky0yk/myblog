@@ -4,35 +4,35 @@ import { Password } from "../vo/Password";
 import { UserId } from "../vo/UserId";
 
 export class User {
-    private id: UserId;
-    private name: Name;
-    private email: Email;
-    private password: Password;
+    private _id: UserId;
+    private _name: Name;
+    private _email: Email;
+    private _password: Password;
 
     constructor(id: UserId, name: Name, email: Email, password: Password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+        this._id = id;
+        this._name = name;
+        this._email = email;
+        this._password = password;
     }
 
     verifyPassword(inputPassword: Password):boolean {
         return this.password.equals(inputPassword)
     }
 
-    getId(): UserId {
-        return this.id;
+    get id() {
+        return this._id;
     }
 
-    getName(): Name {
-        return this.name;
+    get name() {
+        return this._name;
     }
 
-    getEmail(): Email {
-        return this.email;
+    get email() {
+        return this._email;
     }
 
-    getPassword(): Password {
-        return this.password;
+    get password() {
+        return this._password;
     }
 }

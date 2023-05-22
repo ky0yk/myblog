@@ -13,10 +13,10 @@ describe('Post', () => {
       new UserId('1'),
     );
 
-    expect(post.getId().getValue()).toEqual('1');
-    expect(post.getTitle().getValue()).toEqual('Test Title');
-    expect(post.getContent().getValue()).toEqual('Test Content');
-    expect(post.getAuthorId().getValue()).toEqual('1');
+    expect(post.id.value).toEqual('1');
+    expect(post.title.value).toEqual('Test Title');
+    expect(post.content.value).toEqual('Test Content');
+    expect(post.authorId.value).toEqual('1');
   });
 
   // Add more tests for other methods and error cases

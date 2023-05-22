@@ -4,31 +4,31 @@ import { PostId } from "../vo/PostId";
 import { UserId } from "../vo/UserId";
 
 export class Comment {
-    private id: CommentId;
-    private body: CommentBody;
-    private authorId: UserId;
-    private postId: PostId;
+    private _id: CommentId;
+    private _body: CommentBody;
+    private _authorId: UserId;
+    private _postId: PostId;
 
     constructor(id: CommentId, body: CommentBody, authorId: UserId, postId: PostId) {
-        this.id = id;
-        this.body = body;
-        this.authorId = authorId;
-        this.postId = postId;
+        this._id = id;
+        this._body = body;
+        this._authorId = authorId;
+        this._postId = postId;
     }
 
-    getId(): CommentId {
-        return this.id;
+    get id() {
+        return this._id;
     }
 
-    getBody(): CommentBody {
-        return this.body;
+    get body() {
+        return this._body;
     }
 
-    getAuthorId(): UserId {
-        return this.authorId;
+    get authorId() {
+        return this._authorId;
     }
 
-    getPostId(): PostId {
-        return this.postId;
+    get postId() {
+        return this._postId;
     }
 }
