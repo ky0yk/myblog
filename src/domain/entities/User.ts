@@ -17,8 +17,20 @@ export class User {
     }
 
     verifyPassword(inputPassword: Password):boolean {
-        return this.password.equals(inputPassword)
+        return this._password.equals(inputPassword)
     }
+
+update(updateValues: Partial<{ [K in keyof User]: User[K] }>): void {
+    for (const key in updateValues) {
+      // プロパティが存在している場合のみ更新
+      if (key in this && typeof this[key as keyof User] !== 'function') {
+        (this[key as keyof User] as any) = updateValues[key as keyof User];
+      } else {
+        throw new Error(`Invalid property ${key}`);
+      }
+    }
+}
+
 
     get id() {
         return this._id;
