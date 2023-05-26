@@ -45,7 +45,7 @@ export class UserRepository implements IUserRepository {
     }
 
 
-    async save(user: User): Promise<void> {
+    async save(user: User): Promise<User> {
         const {id , name, email, password } = user;
 
         const result = await this._prisma.user.upsert({
@@ -53,7 +53,10 @@ export class UserRepository implements IUserRepository {
             update: {name: name.value, email: email.value, password: password.value},
             create: { id: id.value, name: name.value, email: email.value, password: password.value }
         });
+
+        return new User(new UserId(result.id), new Name(result.name), new Email(result.email), new Password(result.password));
     }
+
 
     async delete(id: UserId): Promise<void> {
         await this._prisma.user.delete({
