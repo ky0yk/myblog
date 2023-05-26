@@ -18,7 +18,8 @@ describe("AuthenticationService", () => {
         const mockUserRepo: IUserRepository = {
             find: jest.fn(),
             save: jest.fn(),
-            findByEmail: jest.fn().mockResolvedValue(testUser)
+            findByEmail: jest.fn().mockResolvedValue(testUser),
+            delete: jest.fn()
         };
 
         const service = new AuthenticationService(mockUserRepo);
@@ -33,6 +34,7 @@ describe("AuthenticationService", () => {
             find: jest.fn(),
             save: jest.fn(),
             findByEmail: jest.fn().mockResolvedValue(null),
+            delete: jest.fn()
         };
 
         const service = new AuthenticationService(mockUserRepo);
@@ -44,7 +46,8 @@ describe("AuthenticationService", () => {
         const mockUserRepo: IUserRepository = {
             find: jest.fn(),
             save: jest.fn(),
-            findByEmail: jest.fn().mockResolvedValue(testUser)
+            findByEmail: jest.fn().mockResolvedValue(testUser),
+            delete: jest.fn()
         };
 
         const service = new AuthenticationService(mockUserRepo);

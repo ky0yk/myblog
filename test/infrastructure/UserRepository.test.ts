@@ -1,5 +1,6 @@
 const mockedFindUnique = jest.fn();
 const mockedUpsert = jest.fn();
+const mockedDelete = jest.fn();
 
 jest.mock("@prisma/client", () => {
     return {
@@ -8,6 +9,7 @@ jest.mock("@prisma/client", () => {
                 user: {
                     findUnique: mockedFindUnique,
                     upsert: mockedUpsert,
+                    delete: mockedDelete,
                 },
             };
         }),
@@ -31,7 +33,7 @@ const testUserData = {
   email: new Email("test@example.com"),
   password: new Password("password"),
 };
-const userEntity = new User(testUserData.id, testUserData.name, testUserData.email, testUserData.password);
+const userEntity: User = new User(testUserData.id, testUserData.name, testUserData.email, testUserData.password);
 
 const mockUser = {
   id: testUserData.id.value,
@@ -46,6 +48,10 @@ beforeEach(() => {
 
 describe("UserRepository", () => {
     describe("find", () => {
+        beforeEach(() => {
+            mockedFindUnique.mockReset();
+        });
+
         it("should return the expected user when user exists", async () => {
             mockedFindUnique.mockResolvedValue(mockUser);
             const result = await userRepository.find(testUserData.id);
@@ -65,6 +71,10 @@ describe("UserRepository", () => {
     });
 
     describe("findByEmail", () => {
+        beforeEach(() => {
+            mockedFindUnique.mockReset();
+        });
+
         it("should return the expected user when user exists", async () => {
             mockedFindUnique.mockResolvedValue(mockUser);
             const result = await userRepository.findByEmail(testUserData.email);
@@ -81,18 +91,43 @@ describe("UserRepository", () => {
             mockedFindUnique.mockRejectedValue(new Error("Test error"));
             await expect(userRepository.findByEmail(testUserData.email)).rejects.toThrow("Test error");
         });
-        ;
     });
 
     describe("save", () => {
-        it("should save the user without throwing an error", async () => {
-            mockedUpsert.mockResolvedValue(null);
-            await expect(userRepository.save(userEntity)).resolves.not.toThrow();
+        beforeEach(() => {
+            mockedUpsert.mockReset();
         });
 
-        it("should throw error when upsert throws error", async () => {
-            mockedUpsert.mockRejectedValue(new Error("Test error"));
-            await expect(userRepository.save(userEntity)).rejects.toThrow("Test error");
+        it('should save a new user without throwing an error', async () => {
+            mockedUpsert.mockResolvedValue(mockUser);
+            await expect(userRepository.save(userEntity)).resolves.toEqual(userEntity);
+        });
+
+        it('should update an existing user without throwing an error', async () => {
+            mockedUpsert.mockResolvedValue(mockUser);
+            await expect(userRepository.save(userEntity)).resolves.toEqual(userEntity);
+        });
+
+        it('should throw an error when upsert throws an error', async () => {
+            mockedUpsert.mockRejectedValue(new Error('Test error'));
+            await expect(userRepository.save(userEntity)).rejects.toThrow('Test error');
         });
     });
+
+    describe("delete", () => {
+        beforeEach(() => {
+            mockedDelete.mockReset();
+        });
+    
+        it('should delete a user without throwing an error', async () => {
+            mockedDelete.mockResolvedValue({});
+            await expect(userRepository.delete(testUserData.id)).resolves.not.toThrow();
+        });
+    
+        it('should throw an error when delete throws an error', async () => {
+            mockedDelete.mockRejectedValue(new Error('Test error'));
+            await expect(userRepository.delete(testUserData.id)).rejects.toThrow('Test error');
+        });
+    });
+    
 });
