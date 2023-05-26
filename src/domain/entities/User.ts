@@ -20,16 +20,34 @@ export class User {
         return this._password.equals(inputPassword)
     }
 
-update(updateValues: Partial<{ [K in keyof User]: User[K] }>): void {
-    for (const key in updateValues) {
-      // プロパティが存在している場合のみ更新
-      if (key in this && typeof this[key as keyof User] !== 'function') {
-        (this[key as keyof User] as any) = updateValues[key as keyof User];
-      } else {
-        throw new Error(`Invalid property ${key}`);
+
+    updateWithDto(updateDto: UserUpdateDto): User {
+        let updatedUser = new User(this._id, this._name, this._email, this._password);
+
+        if (updateDto.name) {
+          updatedUser = updatedUser.updateName(updateDto.name);
+        }
+        if (updateDto.email) {
+          updatedUser = updatedUser.updateEmail(updateDto.email);
+        }
+        if (updateDto.password) {
+          updatedUser = updatedUser.updatePassword(updateDto.password);
+        }
+
+        return updatedUser;
       }
-    }
-}
+
+      updateName(newName: Name): User {
+        return new User(this._id, newName, this._email, this._password);
+      }
+
+      updateEmail(newEmail: Email): User {
+        return new User(this._id, this._name, newEmail, this._password);
+      }
+
+      updatePassword(newPassword: Password): User {
+        return new User(this._id, this._name, this._email, newPassword);
+      }
 
 
     get id() {
@@ -48,3 +66,12 @@ update(updateValues: Partial<{ [K in keyof User]: User[K] }>): void {
         return this._password;
     }
 }
+
+interface UserDtoBase {
+    name: Name;
+    email: Email;
+    password: Password;
+}
+
+export interface UserCreateDto extends UserDtoBase {}
+export interface UserUpdateDto extends Partial<UserDtoBase> {}
