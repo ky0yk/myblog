@@ -1,18 +1,18 @@
 export class Email {
-    private _value: string;
+  private _value: string
 
-    constructor(value: string) {
-        if (!this.isValidEmail(value)) {
-            throw new Error('Invalid email format');
-        }
-        this._value = value;
+  constructor(value: string) {
+    if (!this.isValidEmail(value)) {
+      throw new Error('Invalid email format')
     }
+    this._value = value
+  }
 
-    get value(): string {
-        return this._value;
-    }
+  get value(): string {
+    return this._value
+  }
 
-    private isValidEmail(email: string): boolean {
-        return email.includes('@');
-    }
+  private isValidEmail(email: string): boolean {
+    return email.includes('@')
+  }
 }
