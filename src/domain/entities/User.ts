@@ -77,4 +77,8 @@ interface UserDtoBase {
 export interface UserCreateDto extends UserDtoBase {}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface UserUpdateDto extends Partial<UserDtoBase> {}
-
+export interface UserResponse {
+  id: string;
+  name: string;
+  email: string;
+}
