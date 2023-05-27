@@ -10,6 +10,10 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 8080
+# Make our wait script executable
+RUN chmod +x /usr/src/app/scripts/wait-for-db.sh
 
-CMD [ "node", "dist/server.js" ]
+EXPOSE 3000
+
+# Start application with the wait script
+CMD [ "/usr/src/app/scripts/wait-for-db.sh", "db", "node", "dist/server.js" ]

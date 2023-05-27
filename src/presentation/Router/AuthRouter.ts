@@ -1,5 +1,5 @@
 import express from 'express';
-import { AuthController } from '../Controller/AuthController';
+import { AuthController } from '../controller/AuthController';
 
 
 export class AuthRouter {
