@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserController } from '../Controller/UserController';
+import { UserController } from '../controller/UserController';
 
 export class UserRouter {
     private userController: UserController;

@@ -1,10 +1,13 @@
 import express from 'express';
-import { UserController } from './presentation/Controller/UserController';
-import { UserRouter } from './presentation/Router/UserRouter';
-import { PostController } from './presentation/Controller/PostController';
-import { PostRouter } from './presentation/Router/PostRouter';
-import { AuthController } from './presentation/Controller/AuthController';
-import { AuthRouter } from './presentation/Router/AuthRouter';
+
+import { UserRouter } from './presentation/router/UserRouter';
+
+import { PostRouter } from './presentation/router/PostRouter';
+
+import { AuthRouter } from './presentation/router/AuthRouter';
+import { UserController } from './presentation/controller/UserController';
+import { PostController } from './presentation/controller/PostController';
+import { AuthController } from './presentation/controller/AuthController';
 
 const app = express();
 const port = 3000;

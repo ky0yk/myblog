@@ -1,5 +1,5 @@
 import express from 'express';
-import { PostController } from '../Controller/PostController';
+import { PostController } from '../controller/PostController';
 
 export class PostRouter {
     private postController: PostController;
