@@ -1,4 +1,4 @@
-import { User, UserCreateDto } from '../../src/domain/entities/User'
+import { User, UserCreateDto, UserResponse } from '../../src/domain/entities/User'
 import { UserRegistrationService } from "../../src/application/UserRegistrationService";
 import { Email } from "../../src/domain/vo/Email";
 import { Name } from "../../src/domain/vo/Name";
@@ -43,7 +43,13 @@ describe("UserRegistrationService", () => {
 
         const result = await userRegistrationService.register(userDto);
 
-        expect(result).toEqual(userEntity);
+        const exptedRes: UserResponse = {
+            id: userEntity.id.value,
+            name: userEntity.name.value,
+            email: userEntity.email.value
+        };
+
+        expect(result).toEqual(exptedRes);
     });
 
     it('should throw error when email is already in user', async () => {
