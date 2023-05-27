@@ -15,7 +15,7 @@ export class UserRegistrationService {
       }
   
       const user = new User(
-        new UserId(uuidv4.toString()),
+        new UserId(uuidv4()),
         name,
         email,
         password,

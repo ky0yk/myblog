@@ -73,5 +73,8 @@ interface UserDtoBase {
   password: Password;
 }
 
-export type UserCreateDto = UserDtoBase;
-export type UserUpdateDto = Partial<UserDtoBase>;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface UserCreateDto extends UserDtoBase {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface UserUpdateDto extends Partial<UserDtoBase> {}
+

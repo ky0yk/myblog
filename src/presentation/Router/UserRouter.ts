@@ -11,7 +11,7 @@ export class UserRouter {
     }
 
     private initializeRoutes() {
-        this.router.post('/', (req, res) => this.userController.createUser(req, res));
+        this.router.post('/register', (req, res) => this.userController.register(req, res));
         this.router.get('/:userId', (req, res) => this.userController.getUser(req, res));
         this.router.put('/:userId', (req, res) => this.userController.updateUser(req, res));
         this.router.delete('/:userId', (req, res) => this.userController.deleteUser(req, res));

@@ -21,7 +21,7 @@ describe("UserRegistrationService", () => {
     }
 
     const userEntity = new User(
-        new UserId(uuidv4.toString()),
+        new UserId(uuidv4()),
         new Name('Test Name'),
         new Email('test@example.com'),
         new Password('password')
