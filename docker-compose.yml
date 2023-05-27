@@ -10,8 +10,8 @@ services:
       - ./src:/usr/src/app/src
       - ./dist:/usr/src/app/dist
     command: npm run dev
-    environment:
-      - DATABASE_URL
+    env_file:
+      - ./.env.docker
     depends_on:
       - db
     links:
