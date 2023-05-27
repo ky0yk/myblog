@@ -5,11 +5,13 @@ services:
     restart: always
     build: .
     ports:
-      - '8080:8080'
+      - '3000:3000'
     volumes:
       - ./src:/usr/src/app/src
       - ./dist:/usr/src/app/dist
     command: npm run dev
+    environment:
+      - DATABASE_URL
     depends_on:
       - db
     links:
