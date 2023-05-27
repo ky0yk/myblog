@@ -50,7 +50,7 @@ export class UserRepository implements IUserRepository {
   async save(user: User): Promise<void> {
     const { id, name, email, password } = user
 
-    const result = await this._prisma.user.upsert({
+    await this._prisma.user.upsert({
       where: { id: id.value },
       update: {
         name: name.value,
