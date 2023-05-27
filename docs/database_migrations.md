@@ -1,12 +1,12 @@
-# Prismaを用いたデータベースマイグレーション
+# Prisma を用いたデータベースマイグレーション
 
 ## はじめに
 
-このプロジェクトでは、データベースマイグレーションの管理に[Prisma Migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate)を使用しています。Prisma Migrateは開発者がデータベーススキーマの変更を安全に追跡し、バージョン管理することを可能にします。
+このプロジェクトでは、データベースマイグレーションの管理に[Prisma Migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate)を使用しています。Prisma Migrate は開発者がデータベーススキーマの変更を安全に追跡し、バージョン管理することを可能にします。
 
 ## 前提条件
 
-Prisma CLIを使用するためには、Node.jsとnpmがインストールされている必要があります。また、Dockerを介してMySQL 8が稼働している必要があります。
+Prisma CLI を使用するためには、Node.js と npm がインストールされている必要があります。また、Docker を介して MySQL 8 が稼働している必要があります。
 
 ## 基本的なコマンド
 

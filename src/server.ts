@@ -20,8 +20,8 @@ const authRouter= new AuthRouter(authController);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+  res.send('Hello World!')
+})
 
 
 app.use('/users', userRouter.router);
@@ -29,5 +29,5 @@ app.use('/posts', postRouter.router);
 app.use('/auth', authRouter.router);
 
 app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`);
-});
+  console.log(`server started at http://localhost:${port}`)
+})
