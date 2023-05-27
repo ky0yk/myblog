@@ -8,6 +8,8 @@ export class PostController {
     // constructor(postPublishingService: PostPublishingService) {
     //     this.postPublishingService = postPublishingService;
     // }
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     constructor() {}
 
     async createPost(req: Request, res: Response): Promise<void> {
