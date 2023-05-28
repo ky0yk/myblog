@@ -13,7 +13,7 @@ export class AuthService {
     async login(email: Email, password: Password): Promise<string | null> {
         const user = await this.userRepository.findByEmail(email);
 
-        if (user && await comparePassword(password.value, user.password.value)) {
+        if (user && await comparePassword(password, user.password.value)) {
             // TODO トークン生成ロジック
             
             return 'logged in';
