@@ -2,11 +2,17 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
+# install dependencies
 COPY package*.json ./
+RUN npm install && npm cache clean --force
 
-RUN npm install
+# build bcrypt in docker
+RUN npm rebuild bcrypt --build-from-source
 
 COPY . .
+
+# Generate prisma client
+RUN npx prisma generate
 
 RUN npm run build
 
