@@ -19,7 +19,7 @@ export class AuthController {
             if (token) {
                 res.json({ token });
             } else {
-                res.json(401).json({ message: 'Invalid email or password'});
+                res.status(401).json({ message: 'Invalid email or password'});
             }
         } catch(err) {
             res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
