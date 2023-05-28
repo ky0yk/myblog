@@ -17,6 +17,10 @@ jest.mock('@prisma/client', () => {
   }
 })
 
+jest.mock('../../src/utils/passwordHasher', () => ({
+  hashPassword: jest.fn(),
+}));
+
 import { PrismaClient } from '@prisma/client'
 import { UserRepository } from '../../src/infrastructure/repositories/UserRepository'
 import { UserId } from '../../src/domain/vo/UserId'
@@ -24,6 +28,7 @@ import { Email } from '../../src/domain/vo/Email'
 import { Name } from '../../src/domain/vo/Name'
 import { Password } from '../../src/domain/vo/Password'
 import { User } from '../../src/domain/entities/User'
+import { hashPassword } from '../../src/utils/passwordHasher';
 
 let userRepository: UserRepository
 const prisma = new PrismaClient()
@@ -97,7 +102,18 @@ describe('UserRepository', () => {
 
   describe('save', () => {
     it('should correctly upsert a user', async () => {
-      mockedUpsert.mockResolvedValue(mockUser);
+      const hashedPassword = "$2b$10$GAgBnie6a4gfV1uq8aX7DeXInn8pay2LKs/fJKBu7s7rFOtyCHPV.";
+
+      mockedUpsert.mockResolvedValue({...mockUser, password: hashedPassword});
+      (hashPassword as jest.Mock).mockImplementation(() => Promise.resolve(hashedPassword));
+
+      const expectedUserEntity = new User(
+        testUserData.id,
+        testUserData.name,
+        testUserData.email,
+        new Password(hashedPassword)
+      )
+
       const savedUser = await userRepository.save(userEntity);
 
       expect(mockedUpsert).toHaveBeenCalledWith({
@@ -105,17 +121,17 @@ describe('UserRepository', () => {
         update: { 
           name: testUserData.name.value, 
           email: testUserData.email.value, 
-          password: testUserData.password.value 
+          password: hashedPassword
         },
         create: { 
           id: testUserData.id.value, 
           name: testUserData.name.value, 
           email: testUserData.email.value, 
-          password: testUserData.password.value 
+          password: hashedPassword
         },
       });
 
-      expect(savedUser).toEqual(userEntity);
+      expect(savedUser).toEqual(expectedUserEntity);
     });
 
     it('should throw error when upsert throws error', async () => {
