@@ -9,6 +9,7 @@ import { AuthController } from './presentation/controller/AuthController';
 import { UserRegistrationService } from './application/UserRegistrationService';
 import { UserRepository } from './infrastructure/repositories/UserRepository';
 import { PrismaClient } from '@prisma/client';
+import { AuthService } from './application/AuthService';
 
 const app = express();
 const port = 3000;
@@ -22,7 +23,8 @@ const userRouter = new UserRouter(userController);
 const postController = new PostController();
 const postRouter = new PostRouter(postController);
 
-const authController = new AuthController();
+const authService = new AuthService(userRepository);
+const authController = new AuthController(authService);
 const authRouter= new AuthRouter(authController);
 
 
