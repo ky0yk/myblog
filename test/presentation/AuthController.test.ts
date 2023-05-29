@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 
-import { Email } from '../../src/domain/vo/Email';
-import { Password } from '../../src/domain/vo/Password';
 import { AuthController } from '../../src/presentation/controller/AuthController';
 import { AuthService } from '../../src/application/AuthService';
 import { PrismaClient } from '@prisma/client';
