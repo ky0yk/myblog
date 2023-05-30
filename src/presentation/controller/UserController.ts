@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { Email } from '../../domain/vo/Email';
 import { Name } from "../../domain/vo/Name";
 import { Password } from "../../domain/vo/Password";
-import { UserCreateDto } from '../../domain/entities/User';
+import { UserCreateDto, UserUpdateDto } from '../../domain/entities/User';
 import { AuthService } from '../../application/AuthService';
 import { UserService } from '../../domain/services/UserService';
+import { UserId } from '../../domain/vo/UserId';
 
 export class UserController {
     private userService: UserService;
@@ -33,18 +34,26 @@ export class UserController {
 
     async getUser(req: Request, res: Response): Promise<void> {
         try {
-            const id = req.params.userId;
-            const user = await this.userService.get(id);
+            const userId = new UserId(req.params.userId);
+            const user = await this.userService.get(userId);
             res.json(user);
         } catch(err) {
             res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
         }
     }
 
-    updateUser(req: Request, res: Response) {
-        const userId = req.params.userId;
-        res.status(200).json({ message: `User with ID: ${userId} updated` });
+    async updateUser(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = new UserId(req.params.userId);
+            const { name, email, password } = req.body;
+            const updatedUserDto: UserUpdateDto = { name, email, password };
+            const updatedUser = await this.userService.update(userId, updatedUserDto);
+            res.json(updatedUser);
+        } catch(err) {
+            res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+        }
     }
+    
 
     deleteUser(req: Request, res: Response) {
         const userId = req.params.userId;

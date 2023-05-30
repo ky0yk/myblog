@@ -6,6 +6,8 @@ import { hashPassword } from "../../utils/passwordHasher";
 import { UserRepository } from "../../infrastructure/repositories/UserRepository";
 
 import { v4 as uuidv4 } from "uuid";
+import { Name } from "../vo/Name";
+import { Email } from "../vo/Email";
 
 
 export class UserService {
@@ -37,9 +39,8 @@ export class UserService {
     };
   }
 
-  async get(userId: string): Promise<UserResponse> {
-    const id = new UserId(userId);
-    const user = await this.userRepository.find(id);
+  async get(userId: UserId): Promise<UserResponse> {
+    const user = await this.userRepository.find(userId);
     if (!user) {
         throw new Error("User not found.");
     }
@@ -51,30 +52,33 @@ export class UserService {
     };
     }
 
-  async update(id: UserId, userDto: UserUpdateDto): Promise<UserResponse> {
-    const { email, name, password } = userDto;
-  
-    const user = await this.userRepository.find(id);
-    if (!user) {
-      throw new Error("User not found.");
-    }
-  
-    const hashedPassword = password ? await hashPassword(password) : user.password.value;
-    const updatedUserDto = { name, email, password: new Password(hashedPassword) } as UserUpdateDto;
-  
-    const updatedUser = user.updateWithDto(updatedUserDto);
-  
-    await this.userRepository.save(updatedUser);
-  
-    return {
-      id: updatedUser.id.value,
-      name: updatedUser.name.value,
-      email: updatedUser.email.value
-    };
-  }
-  
-  
-
+    async update(userId: UserId, userDto: UserUpdateDto): Promise<UserResponse> {
+        const user = await this.userRepository.find(userId);
+        if (!user) {
+          throw new Error("User not found.");
+        }
+      
+        const { name, email, password } = userDto;
+      
+        // Create a new UserUpdateDto instance that contains either new values or the existing ones
+        const updatedUserDto: UserUpdateDto = {
+            name: name ? name : user.name.value,
+            email: email ? email : user.email.value,
+            password: password ? await hashPassword(new Password(password)) : user.password.value
+        };
+        
+      
+        // Update the user with the new values
+        const updatedUser = user.updateWithDto(updatedUserDto);
+        await this.userRepository.save(updatedUser);
+      
+        return {
+          id: updatedUser.id.value,
+          name: updatedUser.name.value,
+          email: updatedUser.email.value
+        };
+      }
+      
   async delete(id: string): Promise<void> {
     const user = await this.userRepository.find(new UserId(id));
     if (!user) {
