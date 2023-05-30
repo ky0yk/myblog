@@ -31,9 +31,14 @@ export class UserController {
         }
     }
 
-    getUser(req: Request, res: Response) {
-        const userId = req.params.userId;
-        res.status(200).json({ message: `User with ID: ${userId}` });
+    async getUser(req: Request, res: Response): Promise<void> {
+        try {
+            const id = req.params.userId;
+            const user = await this.userService.get(id);
+            res.json(user);
+        } catch(err) {
+            res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+        }
     }
 
     updateUser(req: Request, res: Response) {

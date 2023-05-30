@@ -37,6 +37,20 @@ export class UserService {
     };
   }
 
+  async get(userId: string): Promise<UserResponse> {
+    const id = new UserId(userId);
+    const user = await this.userRepository.find(id);
+    if (!user) {
+        throw new Error("User not found.");
+    }
+
+    return {
+        id: user.id.value,
+        name: user.name.value,
+        email: user.email.value,
+    };
+    }
+
   async update(id: UserId, userDto: UserUpdateDto): Promise<UserResponse> {
     const { email, name, password } = userDto;
   
