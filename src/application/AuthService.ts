@@ -15,8 +15,6 @@ export class AuthService {
 
     async login(email: Email, password: Password): Promise<string | null> {
         const user = await this.userRepository.findByEmail(email);
-        console.log(password)
-        console.log(user);
 
         if (user && await comparePassword(password, user.password.value)) {
             return this.createJwt(user.id);
