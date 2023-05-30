@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import { UserRegistrationService } from '../../application/UserRegistrationService';
 import { Email } from '../../domain/vo/Email';
 import { Name } from "../../domain/vo/Name";
 import { Password } from "../../domain/vo/Password";
 import { UserCreateDto } from '../../domain/entities/User';
 import { AuthService } from '../../application/AuthService';
+import { UserService } from '../../domain/services/UserService';
 
 export class UserController {
-    private userRegistrationService: UserRegistrationService;
+    private userService: UserService;
     private authService: AuthService;
 
-    constructor(userRegistrationService:UserRegistrationService, authService: AuthService){
-        this.userRegistrationService = userRegistrationService;
+    constructor(userService: UserService, authService: AuthService){
+        this.userService = userService;
         this.authService = authService;
     }
 
@@ -23,7 +23,7 @@ export class UserController {
                 password: new Password(req.body.password)
             }
             
-            const user = await this.userRegistrationService.register(userCreateDto);
+            const user = await this.userService.register(userCreateDto);
 
             res.status(201).json(user);
         } catch (err) {
