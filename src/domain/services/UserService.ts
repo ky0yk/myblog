@@ -28,7 +28,6 @@ export class UserService {
       email,
       new Password(hashedPassword),
     );
-    console.log(user)
 
     const savedUser = await this.userRepository.save(user);
 
@@ -79,8 +78,8 @@ export class UserService {
         };
       }
       
-  async delete(id: string): Promise<void> {
-    const user = await this.userRepository.find(new UserId(id));
+  async delete(userId: UserId): Promise<void> {
+    const user = await this.userRepository.find(userId);
     if (!user) {
       throw new Error("User not found.");
     }

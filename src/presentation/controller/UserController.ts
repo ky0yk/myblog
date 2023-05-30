@@ -55,9 +55,14 @@ export class UserController {
     }
     
 
-    deleteUser(req: Request, res: Response) {
-        const userId = req.params.userId;
-        res.status(200).json({ message: `User with ID: ${userId} deleted` });
+    async deleteUser(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = new UserId(req.params.userId);
+            await this.userService.delete(userId);
+            res.sendStatus(204);
+        } catch(err) {
+            res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+        }
     }
 
     async login(req: Request, res: Response): Promise<void> {
