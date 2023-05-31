@@ -26,7 +26,7 @@ post:
             $ref: '../../schemas/errorResponse.yml'
   security:
     - BearerAuth: []
-put:
+patch:
   tags:
     - Comments
   summary: Update a comment
@@ -37,7 +37,6 @@ put:
         schema:
           $ref: '../../schemas/comments/commentUpdateDto.yml'
         example:
-          commentId: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
           content: "This is an updated comment."
   responses:
     '200':

@@ -29,7 +29,7 @@ get:
           example:
             error: "User not found"
 
-put:
+patch:
   tags:
     - Users
   summary: Update a user
