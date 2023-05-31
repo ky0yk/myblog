@@ -22,32 +22,33 @@ export class User {
 
 
     updateWithDto(updateDto: UserUpdateDto): User {
-        let updatedUser = new User(this._id, this._name, this._email, this._password);
-
-        if (updateDto.name) {
-          updatedUser = updatedUser.updateName(updateDto.name);
-        }
-        if (updateDto.email) {
-          updatedUser = updatedUser.updateEmail(updateDto.email);
-        }
-        if (updateDto.password) {
-          updatedUser = updatedUser.updatePassword(updateDto.password);
-        }
-
-        return updatedUser;
+      let updatedUser = new User(this._id, this._name, this._email, this._password);
+    
+      if (updateDto.name) {
+        updatedUser = updatedUser.updateName(new Name(updateDto.name));
       }
-
-      updateName(newName: Name): User {
-        return new User(this._id, newName, this._email, this._password);
+      if (updateDto.email) {
+        updatedUser = updatedUser.updateEmail(new Email(updateDto.email));
       }
-
-      updateEmail(newEmail: Email): User {
-        return new User(this._id, this._name, newEmail, this._password);
+      if (updateDto.password) {
+        updatedUser = updatedUser.updatePassword(new Password(updateDto.password));
       }
-
-      updatePassword(newPassword: Password): User {
-        return new User(this._id, this._name, this._email, newPassword);
-      }
+    
+      return updatedUser;
+    }
+    
+    updateName(newName: Name): User {
+      return new User(this._id, newName, this._email, this._password);
+    }
+    
+    updateEmail(newEmail: Email): User {
+      return new User(this._id, this._name, newEmail, this._password);
+    }
+    
+    updatePassword(newPassword: Password): User {
+      return new User(this._id, this._name, this._email, newPassword);
+    }
+    
 
 
     get id() {
@@ -75,8 +76,13 @@ interface UserDtoBase {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface UserCreateDto extends UserDtoBase {}
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface UserUpdateDto extends Partial<UserDtoBase> {}
+
+export interface UserUpdateDto {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export interface UserResponse {
   id: string;
   name: string;

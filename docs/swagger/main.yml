@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /users/register:
+    $ref: './paths/register.yml'
+  /users/login:
+    $ref: './paths/login.yml'
+  /users/{userId}:
+    $ref: './paths/user.yml'
