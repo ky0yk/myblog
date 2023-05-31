@@ -6,8 +6,6 @@ import { hashPassword } from "../../utils/passwordHasher";
 import { UserRepository } from "../../infrastructure/repositories/UserRepository";
 
 import { v4 as uuidv4 } from "uuid";
-import { Name } from "../vo/Name";
-import { Email } from "../vo/Email";
 
 
 export class UserService {
@@ -26,7 +24,7 @@ export class UserService {
       new UserId(uuidv4()),
       name,
       email,
-      new Password(hashedPassword),
+      hashedPassword,
     );
 
     const savedUser = await this.userRepository.save(user);
@@ -58,15 +56,15 @@ export class UserService {
         }
       
         const { name, email, password } = userDto;
+
       
         // Create a new UserUpdateDto instance that contains either new values or the existing ones
         const updatedUserDto: UserUpdateDto = {
             name: name ? name : user.name.value,
             email: email ? email : user.email.value,
-            password: password ? await hashPassword(new Password(password)) : user.password.value
+            password: password ? (await hashPassword(new Password(password))).value : user.password.value
         };
-        
-      
+
         // Update the user with the new values
         const updatedUser = user.updateWithDto(updatedUserDto);
         await this.userRepository.save(updatedUser);

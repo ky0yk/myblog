@@ -1,13 +1,13 @@
 import express from 'express';
 
-import { UserRouter } from './presentation/router/UserRouter';
-import { PostRouter } from './presentation/router/PostRouter';
 import { UserController } from './presentation/controller/UserController';
 import { PostController } from './presentation/controller/PostController';
 import { UserRepository } from './infrastructure/repositories/UserRepository';
 import { PrismaClient } from '@prisma/client';
 import { AuthService } from './application/AuthService';
 import { UserService } from './domain/services/UserService';
+import { UserRouter } from './presentation/Router/UserRouter';
+import { PostRouter } from './presentation/Router/PostRouter';
 
 const app = express();
 const port = 3000;
