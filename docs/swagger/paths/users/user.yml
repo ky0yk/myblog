@@ -1,4 +1,6 @@
 get:
+  tags:
+    - Users
   summary: Get a user
   parameters:
     - in: path
@@ -13,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/userResponse.yml'
+            $ref: '../../schemas/users/userResponse.yml'
           example:
             id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
             name: "John Doe"
@@ -23,18 +25,20 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../schemas/errorResponse.yml'
+            $ref: '../../schemas/errorResponse.yml'
           example:
             error: "User not found"
 
 put:
+  tags:
+    - Users
   summary: Update a user
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../schemas/userUpdateDto.yml'
+          $ref: '../../schemas/users/userUpdateDto.yml'
         example:
           name: "Updated Name"
           email: "updated@example.com"
@@ -52,7 +56,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../schemas/userResponse.yml'
+            $ref: '../../schemas/users/userResponse.yml'
           example:
             id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
             name: "Updated Name"
@@ -62,11 +66,15 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../schemas/errorResponse.yml'
+            $ref: '../../schemas/errorResponse.yml'
           example:
             error: "User not found"
+  security:
+    - BearerAuth: []
 
 delete:
+  tags:
+    - Users
   summary: Delete a user
   parameters:
     - in: path
@@ -83,6 +91,8 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../schemas/errorResponse.yml'
+            $ref: '../../schemas/errorResponse.yml'
           example:
             error: "User not found"
+  security:
+    - BearerAuth: []

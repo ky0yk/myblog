@@ -1,0 +1,38 @@
+post:
+  tags:
+    - Posts
+  summary: Create a new post
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/posts/postCreateDto.yml'
+  responses:
+    '201':
+      description: Post created
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/posts/postResponse.yml'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+  security:
+    - BearerAuth: []
+get:
+  tags:
+    - Posts
+  summary: Get all posts
+  responses:
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/posts/postResponse.yml'

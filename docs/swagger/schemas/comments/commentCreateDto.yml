@@ -1,0 +1,8 @@
+type: object
+properties:
+  content:
+    type: string
+    description: The content of the comment.
+    example: 'This is a comment.'
+required:
+  - content
