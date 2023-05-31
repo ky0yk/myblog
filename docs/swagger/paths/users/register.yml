@@ -1,11 +1,13 @@
 post:
+  tags:
+    - Users
   summary: Register a new user
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../schemas/userCreateDto.yml'
+          $ref: '../../schemas/users/userCreateDto.yml'
         example:
           name: "John Doe"
           email: "john.doe@example.com"
@@ -16,7 +18,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../schemas/userResponse.yml'
+            $ref: '../../schemas/users/userResponse.yml'
           example:
             id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
             name: "John Doe"
@@ -26,6 +28,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../schemas/errorResponse.yml'
+            $ref: '../../schemas/errorResponse.yml'
           example:
             error: "Email already in use."

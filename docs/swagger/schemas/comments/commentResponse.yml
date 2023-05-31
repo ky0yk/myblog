@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: The unique identifier of the comment.
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  postId:
+    type: string
+    format: uuid
+    description: The ID of the post the comment is associated with.
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  authorId:
+    type: string
+    format: uuid
+    description: The ID of the user who authored the comment.
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  content:
+    type: string
+    description: The content of the comment.
+    example: 'This is a comment.'
+  createdAt:
+    type: string
+    format: date-time
+    description: The date and time when the comment was created.
+    example: '2023-05-17T00:00:00Z'
+  updatedAt:
+    type: string
+    format: date-time
+    description: The date and time when the comment was last updated.
+    example: '2023-05-17T00:00:00Z'

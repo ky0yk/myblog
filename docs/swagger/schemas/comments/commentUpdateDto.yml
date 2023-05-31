@@ -1,0 +1,8 @@
+type: object
+properties:
+  content:
+    type: string
+    description: The updated content of the comment.
+    example: 'This is an updated comment.'
+required:
+  - content

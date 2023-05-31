@@ -1,0 +1,13 @@
+type: object
+properties:
+  title:
+    type: string
+    description: The updated title of the post.
+    example: 'Updated Post Title'
+  content:
+    type: string
+    description: The updated content of the post.
+    example: 'This is the updated content of the post.'
+required:
+  - title
+  - content

@@ -1,0 +1,77 @@
+post:
+  tags:
+    - Comments
+  summary: Add a comment to a post
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/comments/commentCreateDto.yml'
+        example:
+          postId: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+          content: "This is a comment."
+  responses:
+    '201':
+      description: Comment added
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/comments/commentResponse.yml'
+    '400':
+      description: Post not found or comment invalid
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+  security:
+    - BearerAuth: []
+patch:
+  tags:
+    - Comments
+  summary: Update a comment
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/comments/commentUpdateDto.yml'
+        example:
+          content: "This is an updated comment."
+  responses:
+    '200':
+      description: Comment updated
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/comments/commentResponse.yml'
+    '400':
+      description: Comment not found or content invalid
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+  security:
+    - BearerAuth: []
+delete:
+  tags:
+    - Comments
+  summary: Delete a comment
+  parameters:
+    - in: path
+      name: commentId
+      required: true
+      schema:
+        type: string
+      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+  responses:
+    '204':
+      description: Comment deleted
+    '400':
+      description: Comment not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+  security:
+    - BearerAuth: []

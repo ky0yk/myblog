@@ -1,0 +1,34 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: The unique identifier of the post.
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  authorId:
+    type: string
+    format: uuid
+    description: The ID of the user who authored the post.
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  title:
+    type: string
+    description: The title of the post.
+    example: 'Post Title'
+  content:
+    type: string
+    description: The content of the post.
+    example: 'This is the content of the post.'
+  isPublished:
+    type: boolean
+    description: Whether the post is published or not.
+    example: false
+  createdAt:
+    type: string
+    format: date-time
+    description: The date and time when the post was created.
+    example: '2023-05-17T00:00:00Z'
+  updatedAt:
+    type: string
+    format: date-time
+    description: The date and time when the post was last updated.
+    example: '2023-05-17T00:00:00Z'

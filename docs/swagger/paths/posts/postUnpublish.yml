@@ -1,0 +1,27 @@
+patch:
+  tags:
+    - Posts
+  summary: Unpublish a post
+  security:
+    - BearerAuth: []
+  responses:
+    '204':
+      description: Post unpublished successfully
+    '400':
+      description: Invalid post ID
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+    '401':
+      description: Unauthenticated user
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'
+    '403':
+      description: Unauthorized operation
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/errorResponse.yml'

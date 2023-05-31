@@ -4,8 +4,26 @@ info:
   version: 1.0.0
 paths:
   /users/register:
-    $ref: './paths/register.yml'
+    $ref: './paths/users/register.yml'
   /users/login:
-    $ref: './paths/login.yml'
+    $ref: './paths/users/login.yml'
   /users/{userId}:
-    $ref: './paths/user.yml'
+    $ref: './paths/users/user.yml'
+  /posts:
+    $ref: './paths/posts/posts.yml'
+  /posts/{postId}:
+    $ref: './paths/posts/post.yml'
+  /posts/{postId}/publish:
+    $ref: './paths/posts/postPublish.yml'
+  /posts/{postId}/unpublish:
+    $ref: './paths/posts/postUnpublish.yml'
+  /posts/{postId}/comments:
+    $ref: './paths/comments/comments.yml'
+  /comments/{commentId}:
+    $ref: './paths/comments/comment.yml'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

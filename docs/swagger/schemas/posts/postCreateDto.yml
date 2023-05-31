@@ -1,0 +1,13 @@
+type: object
+properties:
+  title:
+    type: string
+    description: The title of the post.
+    example: 'Post Title'
+  content:
+    type: string
+    description: The content of the post.
+    example: 'This is the content of the post.'
+required:
+  - title
+  - content

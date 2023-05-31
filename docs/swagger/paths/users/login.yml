@@ -1,4 +1,6 @@
 post:
+  tags:
+    - Users
   summary: Login to the application
   requestBody:
     required: true

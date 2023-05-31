@@ -7,6 +7,9 @@
   "paths": {
     "/users/register": {
       "post": {
+        "tags": [
+          "Users"
+        ],
         "summary": "Register a new user",
         "requestBody": {
           "required": true,
@@ -89,6 +92,9 @@
     },
     "/users/login": {
       "post": {
+        "tags": [
+          "Users"
+        ],
         "summary": "Login to the application",
         "requestBody": {
           "required": true,
@@ -151,6 +157,9 @@
     },
     "/users/{userId}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "summary": "Get a user",
         "parameters": [
           {
@@ -210,7 +219,10 @@
           }
         }
       },
-      "put": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
         "summary": "Update a user",
         "requestBody": {
           "required": true,
@@ -294,9 +306,17 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
         "summary": "Delete a user",
         "parameters": [
           {
@@ -331,7 +351,885 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/posts": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Create a new post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the post.",
+                    "example": "Post Title"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The content of the post.",
+                    "example": "This is the content of the post."
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique identifier of the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the user who authored the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the post.",
+                      "example": "Post Title"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the post.",
+                      "example": "This is the content of the post."
+                    },
+                    "isPublished": {
+                      "type": "boolean",
+                      "description": "Whether the post is published or not.",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was created.",
+                      "example": "2023-05-17T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was last updated.",
+                      "example": "2023-05-17T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The unique identifier of the post.",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The ID of the user who authored the post.",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "The title of the post.",
+                        "example": "Post Title"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the post.",
+                        "example": "This is the content of the post."
+                      },
+                      "isPublished": {
+                        "type": "boolean",
+                        "description": "Whether the post is published or not.",
+                        "example": false
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The date and time when the post was created.",
+                        "example": "2023-05-17T00:00:00Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The date and time when the post was last updated.",
+                        "example": "2023-05-17T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
+      }
+    },
+    "/posts/{postId}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Get a specific post by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique identifier of the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the user who authored the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the post.",
+                      "example": "Post Title"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the post.",
+                      "example": "This is the content of the post."
+                    },
+                    "isPublished": {
+                      "type": "boolean",
+                      "description": "Whether the post is published or not.",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was created.",
+                      "example": "2023-05-17T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was last updated.",
+                      "example": "2023-05-17T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Update a specific post by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The updated title of the post.",
+                    "example": "Updated Post Title"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "The updated content of the post.",
+                    "example": "This is the updated content of the post."
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique identifier of the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the user who authored the post.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the post.",
+                      "example": "Post Title"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the post.",
+                      "example": "This is the content of the post."
+                    },
+                    "isPublished": {
+                      "type": "boolean",
+                      "description": "Whether the post is published or not.",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was created.",
+                      "example": "2023-05-17T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the post was last updated.",
+                      "example": "2023-05-17T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Delete a specific post by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Post deleted"
+          },
+          "404": {
+            "description": "Post not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{postId}/publish": {
+      "patch": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Publish a post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Post published successfully"
+          },
+          "400": {
+            "description": "Invalid post ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{postId}/unpublish": {
+      "patch": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Unpublish a post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Post unpublished successfully"
+          },
+          "400": {
+            "description": "Invalid post ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts/{postId}/comments": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Get all comments for a post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The unique identifier of the comment.",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                      },
+                      "postId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The ID of the post the comment is associated with.",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                      },
+                      "authorId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The ID of the user who authored the comment.",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the comment.",
+                        "example": "This is a comment."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The date and time when the comment was created.",
+                        "example": "2023-05-17T00:00:00Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The date and time when the comment was last updated.",
+                        "example": "2023-05-17T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Post not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/{commentId}": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Add a comment to a post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "The content of the comment.",
+                    "example": "This is a comment."
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "example": {
+                "postId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                "content": "This is a comment."
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comment added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique identifier of the comment.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the post the comment is associated with.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the user who authored the comment.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the comment.",
+                      "example": "This is a comment."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the comment was created.",
+                      "example": "2023-05-17T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the comment was last updated.",
+                      "example": "2023-05-17T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Post not found or comment invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Update a comment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "The updated content of the comment.",
+                    "example": "This is an updated comment."
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "example": {
+                "content": "This is an updated comment."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comment updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique identifier of the comment.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the post the comment is associated with.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "authorId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The ID of the user who authored the comment.",
+                      "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the comment.",
+                      "example": "This is a comment."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the comment was created.",
+                      "example": "2023-05-17T00:00:00Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date and time when the comment was last updated.",
+                      "example": "2023-05-17T00:00:00Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Comment not found or content invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Delete a comment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Comment deleted"
+          },
+          "400": {
+            "description": "Comment not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
