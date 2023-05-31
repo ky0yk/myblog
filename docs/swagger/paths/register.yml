@@ -1,0 +1,31 @@
+post:
+  summary: Register a new user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/userCreateDto.yml'
+        example:
+          name: "John Doe"
+          email: "john.doe@example.com"
+          password: "password123"
+  responses:
+    '201':
+      description: User registered
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/userResponse.yml'
+          example:
+            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            name: "John Doe"
+            email: "john.doe@example.com"
+    '400':
+      description: Email already in use
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errorResponse.yml'
+          example:
+            error: "Email already in use."

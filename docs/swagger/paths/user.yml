@@ -1,0 +1,88 @@
+get:
+  summary: Get a user
+  parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: string
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+  responses:
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/userResponse.yml'
+          example:
+            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            name: "John Doe"
+            email: "john.doe@example.com"
+    '400':
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errorResponse.yml'
+          example:
+            error: "User not found"
+
+put:
+  summary: Update a user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/userUpdateDto.yml'
+        example:
+          name: "Updated Name"
+          email: "updated@example.com"
+          password: "updatedpassword"
+  parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: string
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+  responses:
+    '200':
+      description: User updated
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/userResponse.yml'
+          example:
+            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            name: "Updated Name"
+            email: "updated@example.com"
+    '400':
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errorResponse.yml'
+          example:
+            error: "User not found"
+
+delete:
+  summary: Delete a user
+  parameters:
+    - in: path
+      name: userId
+      required: true
+      schema:
+        type: string
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+  responses:
+    '204':
+      description: User deleted
+    '400':
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errorResponse.yml'
+          example:
+            error: "User not found"
