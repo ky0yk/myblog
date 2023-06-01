@@ -1,8 +1,8 @@
-import { Email } from "../domain/vo/Email";
-import { Password } from "../domain/vo/Password";
-import { UserId } from "../domain/vo/UserId";
-import { UserRepository } from "../infrastructure/repositories/UserRepository";
-import { comparePassword } from "../utils/passwordHasher";
+import { Email } from "../../domain/vo/Email";
+import { Password } from "../../domain/vo/Password";
+import { UserId } from "../../domain/vo/UserId";
+import { UserRepository } from "../../infrastructure/repositories/UserRepository";
+import { comparePassword } from "../../utils/passwordHasher";
 import jwt from 'jsonwebtoken';
 
 

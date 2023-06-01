@@ -1,5 +1,5 @@
-import { IPostRepository } from '../repositories/IPostRepository'
-import { PostId } from '../vo/PostId'
+import { IPostRepository } from '../../domain/repositories/IPostRepository'
+import { PostId } from '../../domain/vo/PostId'
 
 export class PostPublishingService {
   constructor(private postRepository: IPostRepository) {

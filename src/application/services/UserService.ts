@@ -1,11 +1,14 @@
 
-import { User, UserCreateDto, UserResponse, UserUpdateDto } from "../../domain/entities/User";
-import { UserId } from "../../domain/vo/UserId";
-import { Password } from "../../domain/vo/Password";
-import { hashPassword } from "../../utils/passwordHasher";
-import { UserRepository } from "../../infrastructure/repositories/UserRepository";
 
 import { v4 as uuidv4 } from "uuid";
+import { UserRepository } from "../../infrastructure/repositories/UserRepository";
+import { User } from "../../domain/entities/User";
+import { hashPassword } from "../../utils/passwordHasher";
+import { UserId } from "../../domain/vo/UserId";
+import { Password } from "../../domain/vo/Password";
+import { UserCreateDto } from "../dto/user/UserCreateDto";
+import { UserResponse } from "../dto/user/UserResponse";
+import { UserUpdateDto } from "../dto/user/UserUpdateDto";
 
 
 export class UserService {

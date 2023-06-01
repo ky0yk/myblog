@@ -1,3 +1,4 @@
+import { UserUpdateDto } from "../../application/dto/user/UserUpdateDto";
 import { Email } from "../vo/Email";
 import { Name } from "../vo/Name";
 import { Password } from "../vo/Password";
@@ -66,25 +67,4 @@ export class User {
     get password() {
         return this._password;
     }
-}
-
-interface UserDtoBase {
-  name: Name;
-  email: Email;
-  password: Password;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface UserCreateDto extends UserDtoBase {}
-
-export interface UserUpdateDto {
-  name?: string;
-  email?: string;
-  password?: string;
-}
-
-export interface UserResponse {
-  id: string;
-  name: string;
-  email: string;
 }
