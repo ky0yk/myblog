@@ -9,6 +9,9 @@ export class Post {
   private _content: Content
   private _authorId: UserId
   private _isPublished: boolean
+  private _createdAt?: Date
+  private _updatedAt?: Date
+
 
   constructor(id: PostId, title: Title, content: Content, authorId: UserId) {
     this._id = id
@@ -19,26 +22,43 @@ export class Post {
   }
 
   publish(): void {
-    this._isPublished = true
+    this._isPublished = true;
+    this._updatedAt = new Date();
+  }
+
+  setCreatedAt(createdAt: Date): void {
+    this._createdAt = createdAt;
+  }
+
+  setUpdatedAt(updatedAt: Date): void {
+    this._updatedAt = updatedAt;
   }
 
   get id() {
-    return this._id
+    return this._id;
   }
 
   get title() {
-    return this._title
+    return this._title;
   }
 
   get content() {
-    return this._content
+    return this._content;
   }
 
   get authorId() {
-    return this._authorId
+    return this._authorId;
   }
 
   get isPublished() {
-    return this._isPublished
+    return this._isPublished;
+  }
+
+  get createdAt() {
+    return this._createdAt;
+  }
+
+  get updatedAt() {
+    return this._updatedAt;
   }
 }
