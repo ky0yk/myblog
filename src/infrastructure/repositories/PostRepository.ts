@@ -7,14 +7,25 @@ import { Content } from '../../domain/vo/Content'
 import { UserId } from '../../domain/vo/UserId'
 
 export class PostRepository implements IPostRepository {
-  private _prisma: PrismaClient
+  private prisma: PrismaClient
 
   constructor(prisma: PrismaClient) {
-    this._prisma = prisma
+    this.prisma = prisma
   }
 
+  async findAll(): Promise<Post[]> {
+    const results = await this.prisma.post.findMany()
+
+    return results.map(result => new Post(
+      new PostId(result.id),
+      new Title(result.title),
+      new Content(result.content),
+      new UserId(result.authorId),
+    ))
+}
+
   async findById(id: PostId): Promise<Post | null> {
-    const result = await this._prisma.post.findUnique({
+    const result = await this.prisma.post.findUnique({
       where: { id: id.value },
     })
 
@@ -33,7 +44,7 @@ export class PostRepository implements IPostRepository {
   async save(post: Post): Promise<void> {
     const { id, authorId, title, content } = post
 
-    await this._prisma.post.upsert({
+    await this.prisma.post.upsert({
       where: { id: id.value },
       update: {
         authorId: authorId.value,
@@ -52,7 +63,7 @@ export class PostRepository implements IPostRepository {
   async delete(post: Post): Promise<void> {
     const { id } = post
 
-    await this._prisma.post.delete({
+    await this.prisma.post.delete({
       where: { id: id.value },
     })
   }
