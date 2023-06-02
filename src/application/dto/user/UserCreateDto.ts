@@ -3,7 +3,7 @@ import { Name } from "../../../domain/vo/Name";
 import { Password } from "../../../domain/vo/Password";
 
 export interface UserCreateDto {
-    name: Name;
-    email: Email;
-    password: Password;
+    name: string;
+    email: string;
+    password: string;
   }

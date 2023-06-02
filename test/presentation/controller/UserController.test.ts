@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { UserService } from '../../../src/domain/services/UserService';
-import { AuthService } from '../../../src/application/AuthService';
-import { UserController } from '../../../src/presentation/controller/UserController';
 import { mock, MockProxy } from 'jest-mock-extended';
+import { UserService } from '../../../src/application/services/UserService';
+import { AuthService } from '../../../src/application/services/AuthService';
+import { UserController } from '../../../src/presentation/controller/UserController';
 
 let userService: MockProxy<UserService> & UserService;
 let authService: MockProxy<AuthService> & AuthService;

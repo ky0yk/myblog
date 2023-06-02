@@ -1,17 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { AuthService } from "../../src/application/AuthService";
-import { UserRepository } from "../../src/infrastructure/repositories/UserRepository";
-import { Email } from "../../src/domain/vo/Email";
-import { Password } from "../../src/domain/vo/Password";
-import { User } from "../../src/domain/entities/User";
-import { UserId } from "../../src/domain/vo/UserId";
-import { Name } from "../../src/domain/vo/Name";
-import { comparePassword } from '../../src/utils/passwordHasher';
+import { AuthService } from "../../../src/application/services/AuthService";
+import { UserRepository } from "../../../src/infrastructure/repositories/UserRepository";
+import { User } from "../../../src/domain/entities/User";
+import { UserId } from "../../../src/domain/vo/UserId";
+import { Name } from "../../../src/domain/vo/Name";
+import { Email } from "../../../src/domain/vo/Email";
+import { Password } from "../../../src/domain/vo/Password";
+import { comparePassword } from "../../../src/utils/passwordHasher";
 
 
-jest.mock('../../src/infrastructure/repositories/UserRepository');
 
-jest.mock('../../src/utils/passwordHasher', () => ({
+jest.mock('../../../src/infrastructure/repositories/UserRepository');
+
+jest.mock('../../../src/utils/passwordHasher', () => ({
     comparePassword: jest.fn()
   }));
 
@@ -24,7 +25,7 @@ describe('AuthSerivice', () => {
 
     beforeEach(() => {
         prisma = new PrismaClient();
-        userRepository = new UserRepository(prisma); 
+        userRepository = new UserRepository(prisma);
         authService = new AuthService(userRepository);
     });
 
@@ -33,7 +34,7 @@ describe('AuthSerivice', () => {
 
         (userRepository.findByEmail as jest.Mock).mockResolvedValue(user);
         (comparePassword as jest.Mock).mockResolvedValue(true);
-        
+
         const token = await authService.login(new Email('john.doe@example.com'), new Password('hashedpassword'));
 
         expect (typeof token).toBe('string');
@@ -44,7 +45,7 @@ describe('AuthSerivice', () => {
         (userRepository.findByEmail as jest.Mock).mockResolvedValue(null);
 
         const token = await authService.login(new Email('john.doe@example.com'), new Password('wronghashedpassword'));
-    
+
         expect (token).toBeNull();
     });
 

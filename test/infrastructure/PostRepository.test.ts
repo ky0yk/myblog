@@ -47,6 +47,8 @@ const mockPost = {
   title: testPostData.title.value,
   content: testPostData.content.value,
   isPublished: postEntity.isPublished,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 }
 
 beforeEach(() => {
