@@ -43,7 +43,7 @@ export class PostRepository implements IPostRepository {
 
   async save(post: Post): Promise<Post> {
     const { id, authorId, title, content } = post
-  
+
     const savedPost = await this.prisma.post.upsert({
       where: { id: id.value },
       update: {
@@ -68,11 +68,9 @@ export class PostRepository implements IPostRepository {
   }
 
 
-  async delete(post: Post): Promise<void> {
-    const { id } = post
-
+  async delete(postId: PostId): Promise<void> {
     await this.prisma.post.delete({
-      where: { id: id.value },
+      where: { id: postId.value },
     })
   }
 }

@@ -3,7 +3,7 @@ import { PostId } from '../vo/PostId'
 
 export interface IPostRepository {
   findAll(): Promise<Post[]>
-  findById(id: PostId): Promise<Post | null>
+  findById(postId: PostId): Promise<Post | null>
   save(post: Post): Promise<Post>
-  delete(post: Post): Promise<void>
+  delete(postId: PostId): Promise<void>
 }

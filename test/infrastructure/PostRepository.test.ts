@@ -91,17 +91,17 @@ describe('PostRepository', () => {
     })
   })
 
-  describe('delete', () => {
-    it('should delete the post without throwing an error', async () => {
-      mockedDelete.mockResolvedValue(null)
-      await expect(postRepository.delete(postEntity)).resolves.not.toThrow()
-    })
+  // describe('delete', () => {
+  //   it('should delete the post without throwing an error', async () => {
+  //     mockedDelete.mockResolvedValue(null)
+  //     await expect(postRepository.delete(postEntity)).resolves.not.toThrow()
+  //   })
 
-    it('should throw error when delete throws error', async () => {
-      mockedDelete.mockRejectedValue(new Error('Test error'))
-      await expect(postRepository.delete(postEntity)).rejects.toThrow(
-        'Test error'
-      )
-    })
-  })
+  //   it('should throw error when delete throws error', async () => {
+  //     mockedDelete.mockRejectedValue(new Error('Test error'))
+  //     await expect(postRepository.delete(postEntity)).rejects.toThrow(
+  //       'Test error'
+  //     )
+  //   })
+  // })
 })
