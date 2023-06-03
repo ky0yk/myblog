@@ -12,7 +12,7 @@ export class Content {
     return this._value
   }
 
-  shortVersion(maxLength: number = 100): string {
+  shortVersion(maxLength = 100): string {
     return this._value.length <= maxLength
       ? this._value
       : this._value.slice(0, maxLength) + '...';

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Email } from '../../domain/vo/Email';
-import { Name } from "../../domain/vo/Name";
 import { Password } from "../../domain/vo/Password";
 import { AuthService } from '../../application/services/AuthService';
 import { UserId } from '../../domain/vo/UserId';
