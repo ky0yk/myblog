@@ -24,7 +24,7 @@ const userController = new UserController(userService, authService);
 const userRouter = new UserRouter(userController);
 
 const postRepository = new PostRepository(prisma);
-const postService = new PostService(postRepository);
+const postService = new PostService(postRepository, userRepository);
 const postController = new PostController(postService);
 const postRouter = new PostRouter(postController);
 

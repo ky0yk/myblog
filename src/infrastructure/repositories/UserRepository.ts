@@ -43,6 +43,25 @@ export class UserRepository implements IUserRepository {
         );
     }
 
+    async findUsersByIds(ids: UserId[]): Promise<User[]> {
+        const userIds = ids.map(id => id.value);
+    
+        const users = await this._prisma.user.findMany({
+          where: {
+            id: {
+              in: userIds
+            }
+          }
+        });
+    
+        return users.map(user => new User(
+          new UserId(user.id),
+          new Name(user.name),
+          new Email(user.email),
+          new Password(user.password)
+        ));
+      }
+
 
     async save(user: User): Promise<User> {
         const {id , name, email, password } = user;

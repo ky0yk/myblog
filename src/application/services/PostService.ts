@@ -2,6 +2,7 @@
 import { Post } from '../../domain/entities/Post';
 import { Content } from '../../domain/vo/Content';
 import { PostId } from '../../domain/vo/PostId'
+import { PostSummary } from '../../domain/vo/PostSummary';
 import { Title } from '../../domain/vo/Title';
 import { UserId } from '../../domain/vo/UserId';
 import { PostRepository } from '../../infrastructure/repositories/PostRepository'
@@ -9,11 +10,10 @@ import { PostCreateDto } from '../dto/post/PostCreateDto';
 import { PostResponseDto } from '../dto/post/PostResponseDto';
 import { PostUpdateDto } from '../dto/post/PostUpdateDto';
 import { v4 as uuidv4 } from "uuid";
+import { UserRepository } from '../../infrastructure/repositories/UserRepository';
 
 export class PostService {
-  constructor(private postRepository: PostRepository) {
-    this.postRepository = postRepository;
-  }
+  constructor(private postRepository: PostRepository, private userRepository: UserRepository) {}
 
   private toDto(post: Post): PostResponseDto {
     return {
@@ -27,9 +27,28 @@ export class PostService {
     };
   }
 
-  async getAllPosts(): Promise<PostResponseDto[]> {
+  async getAllPosts(): Promise<PostSummary[]> {
     const posts = await this.postRepository.findAll();
-    return posts.map(this.toDto);
+    
+    const authorIds = posts.map(post => post.authorId);
+    const users = await this.userRepository.findUsersByIds(authorIds);
+    
+    const userMap = new Map();
+    users.forEach(user => userMap.set(user.id.value, user.name.value));
+    
+    const postSummaries = posts.map(post => {
+      const authorName = userMap.get(post.authorId.value);
+      return new PostSummary(
+        post.id,
+        post.title,
+        post.content.shortVersion(),
+        authorName,
+        post.createdAt as Date,
+        post.updatedAt as Date
+      );
+    });
+  
+    return postSummaries;
   }
 
   async getPostById(id: PostId): Promise<PostResponseDto> {

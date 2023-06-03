@@ -8,6 +8,7 @@ import { PostId } from "../../../src/domain/vo/PostId";
 import { Title } from "../../../src/domain/vo/Title";
 import { Content } from "../../../src/domain/vo/Content";
 import { UserId } from "../../../src/domain/vo/UserId";
+import { UserRepository } from "../../../src/infrastructure/repositories/UserRepository";
 
 jest.mock('@prisma/client', () => {
     return {
@@ -27,12 +28,14 @@ jest.mock('@prisma/client', () => {
 describe("PostService", () => {
   let postService: PostService;
   let postRepository: PostRepository;
+  let userRepository: UserRepository;
   let post: Post;
   let prisma: PrismaClient;
 
   beforeEach(() => {
     postRepository = new PostRepository(prisma);
-    postService = new PostService(postRepository);
+    userRepository = new UserRepository(prisma);
+    postService = new PostService(postRepository, userRepository);
 
     post = new Post(
       new PostId("someId"),
