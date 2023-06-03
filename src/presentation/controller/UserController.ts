@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { Email } from '../../domain/vo/Email';
-import { Name } from "../../domain/vo/Name";
 import { Password } from "../../domain/vo/Password";
-import { UserCreateDto, UserUpdateDto } from '../../domain/entities/User';
-import { AuthService } from '../../application/AuthService';
-import { UserService } from '../../domain/services/UserService';
+import { AuthService } from '../../application/services/AuthService';
 import { UserId } from '../../domain/vo/UserId';
+import { UserService } from '../../application/services/UserService';
+import { UserCreateDto } from '../../application/dto/user/UserCreateDto';
+import { UserUpdateDto } from '../../application/dto/user/UserUpdateDto';
 
 export class UserController {
     private userService: UserService;
@@ -18,12 +18,8 @@ export class UserController {
 
     async register(req: Request, res: Response): Promise<void> {
         try {
-            const userCreateDto: UserCreateDto = {
-                name: new Name(req.body.name),
-                email: new Email(req.body.email),
-                password: new Password(req.body.password)
-            }
-            
+            const userCreateDto: UserCreateDto = req.body;
+
             const user = await this.userService.register(userCreateDto);
 
             res.status(201).json(user);

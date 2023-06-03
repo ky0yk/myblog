@@ -1,20 +1,18 @@
-const mockedFindUnique = jest.fn()
-const mockedUpsert = jest.fn()
-const mockedDelete = jest.fn()
-
 jest.mock('@prisma/client', () => {
   return {
     PrismaClient: jest.fn().mockImplementation(() => {
       return {
         post: {
-          findUnique: mockedFindUnique,
-          upsert: mockedUpsert,
-          delete: mockedDelete,
+          findMany: jest.fn(),
+          findUnique: jest.fn(),
+          upsert: jest.fn(),
+          delete: jest.fn(),
         },
       }
     }),
   }
 })
+
 
 import { PrismaClient } from '@prisma/client'
 import { PostId } from '../../src/domain/vo/PostId'
@@ -24,82 +22,96 @@ import { Content } from '../../src/domain/vo/Content'
 import { Post } from '../../src/domain/entities/Post'
 import { PostRepository } from '../../src/infrastructure/repositories/PostRepository'
 
-let postRepository: PostRepository
-const prisma = new PrismaClient()
+describe("PostRepository", () => {
+  let postRepository: PostRepository;
+  let prisma: PrismaClient;
+  let timestamp: Date
+  let post: Post;
 
-const testPostData = {
-  id: new PostId('someId'),
-  authorId: new UserId('authorId'),
-  title: new Title('Test Title'),
-  content: new Content('Test content'),
-}
+  beforeEach(() => {
+    prisma = new PrismaClient();
+    postRepository = new PostRepository(prisma);
+    timestamp = new Date();
+    post = new Post(
+      new PostId("someId"),
+      new Title("Test Title"),
+      new Content("Test Content"),
+      new UserId("testAuthorId"),
+      false,
+      timestamp,
+      timestamp,
+    );
+  });
 
-const postEntity = new Post(
-  testPostData.id,
-  testPostData.title,
-  testPostData.content,
-  testPostData.authorId
-)
+  describe("findAll", () => {
+    it("should return all posts", async () => {
+      jest.spyOn(prisma.post, "findMany").mockResolvedValue([{
+        id: post.id.value,
+        authorId: post.authorId.value,
+        title: post.title.value,
+        content: post.content.value,
+        isPublished: false,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      }]);
 
-const mockPost = {
-  id: testPostData.id.value,
-  authorId: testPostData.authorId.value,
-  title: testPostData.title.value,
-  content: testPostData.content.value,
-  isPublished: postEntity.isPublished,
-}
+      const posts = await postRepository.findAll();
 
-beforeEach(() => {
-  postRepository = new PostRepository(prisma)
-})
+      expect(posts).toEqual([post]);
+    });
+  });
 
-describe('PostRepository', () => {
-  describe('findById', () => {
-    it('should return the expected post when post exists', async () => {
-      mockedFindUnique.mockResolvedValue(mockPost)
-      const result = await postRepository.findById(testPostData.id)
-      expect(result).toEqual(postEntity)
-    })
+  describe("findById", () => {
+    it("should return the post if it exists", async () => {
+      jest.spyOn(prisma.post, "findUnique").mockResolvedValue({
+        id: post.id.value,
+        authorId: post.authorId.value,
+        title: post.title.value,
+        content: post.content.value,
+        isPublished: false,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      });
 
-    it('should return null when post does not exist', async () => {
-      mockedFindUnique.mockResolvedValue(null)
-      const result = await postRepository.findById(testPostData.id)
-      expect(result).toBeNull()
-    })
+      const foundPost = await postRepository.findById(post.id);
 
-    it('should throw error when findUnique throws error', async () => {
-      mockedFindUnique.mockRejectedValue(new Error('Test error'))
-      await expect(postRepository.findById(testPostData.id)).rejects.toThrow(
-        'Test error'
-      )
-    })
-  })
+      expect(foundPost).toEqual(post);
+    });
 
-  describe('save', () => {
-    it('should save the post without throwing an error', async () => {
-      mockedUpsert.mockResolvedValue(null)
-      await expect(postRepository.save(postEntity)).resolves.not.toThrow()
-    })
+    it("should return null if the post does not exist", async () => {
+      jest.spyOn(prisma.post, "findUnique").mockResolvedValue(null);
 
-    it('should throw error when upsert throws error', async () => {
-      mockedUpsert.mockRejectedValue(new Error('Test error'))
-      await expect(postRepository.save(postEntity)).rejects.toThrow(
-        'Test error'
-      )
-    })
-  })
+      const foundPost = await postRepository.findById(new PostId("nonexistentId"));
 
-  describe('delete', () => {
-    it('should delete the post without throwing an error', async () => {
-      mockedDelete.mockResolvedValue(null)
-      await expect(postRepository.delete(postEntity)).resolves.not.toThrow()
-    })
+      expect(foundPost).toBeNull();
+    });
+  });
 
-    it('should throw error when delete throws error', async () => {
-      mockedDelete.mockRejectedValue(new Error('Test error'))
-      await expect(postRepository.delete(postEntity)).rejects.toThrow(
-        'Test error'
-      )
-    })
-  })
-})
+  describe("save", () => {
+    it("should save the post and return it", async () => {
+      jest.spyOn(prisma.post, "upsert").mockResolvedValue({
+        id: post.id.value,
+        authorId: post.authorId.value,
+        title: post.title.value,
+        content: post.content.value,
+        isPublished: false,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      });
+
+      const savedPost = await postRepository.save(post);
+
+      expect(savedPost).toEqual(post);
+    });
+  });
+
+  describe("delete", () => {
+    it("should delete the post", async () => {
+      const mockDelete = jest.spyOn(prisma.post, "delete");
+
+      await postRepository.delete(post.id);
+
+      expect(mockDelete).toHaveBeenCalledWith({ where: { id: post.id.value } });
+    });
+  });
+});

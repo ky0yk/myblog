@@ -1,11 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { User, UserCreateDto, UserUpdateDto } from "../../../src/domain/entities/User";
-import { UserService } from "../../../src/domain/services/UserService";
+import { UserService } from "../../../src/application/services/UserService";
 import { UserRepository } from "../../../src/infrastructure/repositories/UserRepository";
-import { UserId } from "../../../src/domain/vo/UserId";
-import { Password } from "../../../src/domain/vo/Password";
-import { Email } from "../../../src/domain/vo/Email";
+import { User } from "../../../src/domain/entities/User";
 import { Name } from "../../../src/domain/vo/Name";
+import { Email } from "../../../src/domain/vo/Email";
+import { Password } from "../../../src/domain/vo/Password";
+import { UserId } from "../../../src/domain/vo/UserId";
+import { UserCreateDto } from "../../../src/application/dto/user/UserCreateDto";
+import { UserUpdateDto } from "../../../src/application/dto/user/UserUpdateDto";
+
 
 jest.mock('../../../src/utils/passwordHasher', () => ({
     hashPassword: jest.fn().mockImplementation(password => Promise.resolve(password)),
@@ -37,15 +40,15 @@ describe("UserService", () => {
     userRepository = new UserRepository(prisma);
     userService = new UserService(userRepository);
     userDto = {
-      name: new Name("Test Name"),
-      email: new Email("test@example.com"),
-      password: new Password("hashedpassword"),
+      name: "Test Name",
+      email: "test@example.com",
+      password: "hashedpassword",
     };
     user = new User(
       new UserId("someId"),
-      userDto.name,
-      userDto.email,
-      new Password(userDto.password.value)
+      new Name(userDto.name),
+      new Email(userDto.email),
+      new Password(userDto.password)
     );
   });
   

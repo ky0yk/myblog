@@ -1,18 +1,26 @@
 
-import { User, UserCreateDto, UserResponse, UserUpdateDto } from "../../domain/entities/User";
-import { UserId } from "../../domain/vo/UserId";
-import { Password } from "../../domain/vo/Password";
-import { hashPassword } from "../../utils/passwordHasher";
-import { UserRepository } from "../../infrastructure/repositories/UserRepository";
 
 import { v4 as uuidv4 } from "uuid";
+import { UserRepository } from "../../infrastructure/repositories/UserRepository";
+import { User } from "../../domain/entities/User";
+import { hashPassword } from "../../utils/passwordHasher";
+import { UserId } from "../../domain/vo/UserId";
+import { Password } from "../../domain/vo/Password";
+import { UserCreateDto } from "../dto/user/UserCreateDto";
+import { UserResponse } from "../dto/user/UserResponse";
+import { UserUpdateDto } from "../dto/user/UserUpdateDto";
+import { Email } from "../../domain/vo/Email";
+import { Name } from "../../domain/vo/Name";
 
 
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   async register(userDto: UserCreateDto): Promise<UserResponse> {
-    const { email, name, password } = userDto;
+
+    const email = new Email(userDto.email);
+    const name = new Name(userDto.name);
+    const password = new Password(userDto.password);
 
     const foundUser = await this.userRepository.findByEmail(email);
     if (foundUser) {
