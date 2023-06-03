@@ -9,8 +9,8 @@ post:
         schema:
           $ref: '../../schemas/comments/commentCreateDto.yml'
         example:
-          postId: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-          content: "This is a comment."
+          postId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+          content: 'This is a comment.'
   responses:
     '201':
       description: Comment added
@@ -37,7 +37,7 @@ patch:
         schema:
           $ref: '../../schemas/comments/commentUpdateDto.yml'
         example:
-          content: "This is an updated comment."
+          content: 'This is an updated comment.'
   responses:
     '200':
       description: Comment updated
@@ -63,7 +63,7 @@ delete:
       required: true
       schema:
         type: string
-      example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+      example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
   responses:
     '204':
       description: Comment deleted

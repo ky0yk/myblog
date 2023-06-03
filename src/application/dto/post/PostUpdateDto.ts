@@ -1,4 +1,4 @@
 export interface PostUpdateDto {
-    title?: string;
-    content?: string;
+  title?: string
+  content?: string
 }

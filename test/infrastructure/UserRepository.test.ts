@@ -10,15 +10,14 @@ const testUserData = {
   password: new Password('hashedpassword'),
 }
 
-const mockedFindUnique = jest.fn();
+const mockedFindUnique = jest.fn()
 const mockedUpsert = jest.fn().mockResolvedValue({
   id: testUserData.id.value,
   name: testUserData.name.value,
   email: testUserData.email.value,
-  password: testUserData.password.value
-});
-const mockedDelete = jest.fn();
-
+  password: testUserData.password.value,
+})
+const mockedDelete = jest.fn()
 
 jest.mock('@prisma/client', () => {
   return {
@@ -38,11 +37,8 @@ import { PrismaClient } from '@prisma/client'
 import { UserRepository } from '../../src/infrastructure/repositories/UserRepository'
 import { User } from '../../src/domain/entities/User'
 
-
-
 let userRepository: UserRepository
 const prisma = new PrismaClient()
-
 
 const userEntity = new User(
   testUserData.id,
@@ -107,47 +103,49 @@ describe('UserRepository', () => {
 
   describe('save', () => {
     it('should correctly upsert a user', async () => {
-      const savedUser = await userRepository.save(userEntity);
+      const savedUser = await userRepository.save(userEntity)
 
       expect(mockedUpsert).toHaveBeenCalledWith({
         where: { id: testUserData.id.value },
         update: {
           name: testUserData.name.value,
           email: testUserData.email.value,
-          password: testUserData.password.value
+          password: testUserData.password.value,
         },
         create: {
           id: testUserData.id.value,
           name: testUserData.name.value,
           email: testUserData.email.value,
-          password: testUserData.password.value
+          password: testUserData.password.value,
         },
-      });
+      })
 
-      expect(savedUser).toEqual(userEntity);
-    });
+      expect(savedUser).toEqual(userEntity)
+    })
 
     it('should throw error when upsert throws error', async () => {
-      mockedUpsert.mockRejectedValue(new Error('Test error'));
+      mockedUpsert.mockRejectedValue(new Error('Test error'))
       await expect(userRepository.save(userEntity)).rejects.toThrow(
         'Test error'
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('delete', () => {
     it('should correctly delete a user', async () => {
-      mockedDelete.mockResolvedValue(mockUser);
-      await userRepository.delete(testUserData.id);
+      mockedDelete.mockResolvedValue(mockUser)
+      await userRepository.delete(testUserData.id)
 
-      expect(mockedDelete).toHaveBeenCalledWith({ where: { id: testUserData.id.value } });
-    });
+      expect(mockedDelete).toHaveBeenCalledWith({
+        where: { id: testUserData.id.value },
+      })
+    })
 
     it('should throw error when delete throws error', async () => {
-      mockedDelete.mockRejectedValue(new Error('Test error'));
+      mockedDelete.mockRejectedValue(new Error('Test error'))
       await expect(userRepository.delete(testUserData.id)).rejects.toThrow(
         'Test error'
-      );
-    });
-  });
-});
+      )
+    })
+  })
+})

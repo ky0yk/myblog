@@ -15,6 +15,6 @@ export class Content {
   shortVersion(maxLength = 100): string {
     return this._value.length <= maxLength
       ? this._value
-      : this._value.slice(0, maxLength) + '...';
+      : this._value.slice(0, maxLength) + '...'
   }
 }

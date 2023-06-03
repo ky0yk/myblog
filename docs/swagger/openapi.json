@@ -7,9 +7,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Register a new user",
         "requestBody": {
           "required": true,
@@ -28,11 +26,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ]
+                "required": ["name", "email", "password"]
               },
               "example": {
                 "name": "John Doe",
@@ -92,9 +86,7 @@
     },
     "/users/login": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Login to the application",
         "requestBody": {
           "required": true,
@@ -157,9 +149,7 @@
     },
     "/users/{userId}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get a user",
         "parameters": [
           {
@@ -220,9 +210,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update a user",
         "requestBody": {
           "required": true,
@@ -314,9 +302,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete a user",
         "parameters": [
           {
@@ -361,9 +347,7 @@
     },
     "/posts": {
       "post": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Create a new post",
         "requestBody": {
           "required": true,
@@ -383,10 +367,7 @@
                     "example": "This is the content of the post."
                   }
                 },
-                "required": [
-                  "title",
-                  "content"
-                ]
+                "required": ["title", "content"]
               }
             }
           }
@@ -466,9 +447,7 @@
         ]
       },
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get all posts",
         "responses": {
           "200": {
@@ -530,9 +509,7 @@
     },
     "/posts/{postId}": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get a specific post by ID",
         "parameters": [
           {
@@ -614,9 +591,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Update a specific post by ID",
         "parameters": [
           {
@@ -646,10 +621,7 @@
                     "example": "This is the updated content of the post."
                   }
                 },
-                "required": [
-                  "title",
-                  "content"
-                ]
+                "required": ["title", "content"]
               }
             }
           }
@@ -729,9 +701,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Delete a specific post by ID",
         "parameters": [
           {
@@ -772,9 +742,7 @@
     },
     "/posts/{postId}/publish": {
       "patch": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Publish a post",
         "security": [
           {
@@ -835,9 +803,7 @@
     },
     "/posts/{postId}/unpublish": {
       "patch": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Unpublish a post",
         "security": [
           {
@@ -898,9 +864,7 @@
     },
     "/posts/{postId}/comments": {
       "get": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Get all comments for a post",
         "parameters": [
           {
@@ -984,9 +948,7 @@
     },
     "/comments/{commentId}": {
       "post": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Add a comment to a post",
         "requestBody": {
           "required": true,
@@ -1001,9 +963,7 @@
                     "example": "This is a comment."
                   }
                 },
-                "required": [
-                  "content"
-                ]
+                "required": ["content"]
               },
               "example": {
                 "postId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
@@ -1083,9 +1043,7 @@
         ]
       },
       "patch": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Update a comment",
         "requestBody": {
           "required": true,
@@ -1100,9 +1058,7 @@
                     "example": "This is an updated comment."
                   }
                 },
-                "required": [
-                  "content"
-                ]
+                "required": ["content"]
               },
               "example": {
                 "content": "This is an updated comment."
@@ -1181,9 +1137,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Delete a comment",
         "parameters": [
           {
