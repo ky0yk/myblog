@@ -17,9 +17,9 @@ get:
           schema:
             $ref: '../../schemas/users/userResponse.yml'
           example:
-            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            name: "John Doe"
-            email: "john.doe@example.com"
+            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+            name: 'John Doe'
+            email: 'john.doe@example.com'
     '400':
       description: User not found
       content:
@@ -27,7 +27,7 @@ get:
           schema:
             $ref: '../../schemas/errorResponse.yml'
           example:
-            error: "User not found"
+            error: 'User not found'
 
 patch:
   tags:
@@ -40,9 +40,9 @@ patch:
         schema:
           $ref: '../../schemas/users/userUpdateDto.yml'
         example:
-          name: "Updated Name"
-          email: "updated@example.com"
-          password: "updatedpassword"
+          name: 'Updated Name'
+          email: 'updated@example.com'
+          password: 'updatedpassword'
   parameters:
     - in: path
       name: userId
@@ -58,9 +58,9 @@ patch:
           schema:
             $ref: '../../schemas/users/userResponse.yml'
           example:
-            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            name: "Updated Name"
-            email: "updated@example.com"
+            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+            name: 'Updated Name'
+            email: 'updated@example.com'
     '400':
       description: User not found
       content:
@@ -68,7 +68,7 @@ patch:
           schema:
             $ref: '../../schemas/errorResponse.yml'
           example:
-            error: "User not found"
+            error: 'User not found'
   security:
     - BearerAuth: []
 
@@ -93,6 +93,6 @@ delete:
           schema:
             $ref: '../../schemas/errorResponse.yml'
           example:
-            error: "User not found"
+            error: 'User not found'
   security:
     - BearerAuth: []

@@ -9,9 +9,9 @@ post:
         schema:
           $ref: '../../schemas/users/userCreateDto.yml'
         example:
-          name: "John Doe"
-          email: "john.doe@example.com"
-          password: "password123"
+          name: 'John Doe'
+          email: 'john.doe@example.com'
+          password: 'password123'
   responses:
     '201':
       description: User registered
@@ -20,9 +20,9 @@ post:
           schema:
             $ref: '../../schemas/users/userResponse.yml'
           example:
-            id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            name: "John Doe"
-            email: "john.doe@example.com"
+            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+            name: 'John Doe'
+            email: 'john.doe@example.com'
     '400':
       description: Email already in use
       content:
@@ -30,4 +30,4 @@ post:
           schema:
             $ref: '../../schemas/errorResponse.yml'
           example:
-            error: "Email already in use."
+            error: 'Email already in use.'
