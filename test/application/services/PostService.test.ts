@@ -27,48 +27,52 @@ jest.mock('@prisma/client', () => {
 describe("PostService", () => {
   let postService: PostService;
   let postRepository: PostRepository;
-  let postCreateDto: PostCreateDto;
-  let postUpdateDto: PostUpdateDto;
   let post: Post;
   let prisma: PrismaClient;
 
   beforeEach(() => {
     postRepository = new PostRepository(prisma);
     postService = new PostService(postRepository);
-    postCreateDto = {
-      title: "Test Title",
-      content: "Test Content",
-      authorId: "testAuthorId"
-    };
-    postUpdateDto = {
-      title: "Updated Title",
-      content: "Updated Content",
-    };
+
     post = new Post(
       new PostId("someId"),
-      new Title(postCreateDto.title),
-      new Content(postCreateDto.content),
-      new UserId(postCreateDto.authorId)
+      new Title("Test Title"),
+      new Content("Test Content"),
+      new UserId("testAuthorId")
     );
   });
-  
+
   describe("createPost", () => {
     it("should create a new post and return post details", async () => {
-      jest.spyOn(postRepository, "save").mockResolvedValue(post);
-
+      const postCreateDto: PostCreateDto = {
+        title: "Test Title",
+        content: "Test Content",
+        authorId: "testAuthorId"
+      };
+  
+      const savedPost = new Post(
+        new PostId('someId'),
+        new Title(postCreateDto.title),
+        new Content(postCreateDto.content),
+        new UserId(postCreateDto.authorId)
+      );
+      savedPost.setCreatedAt(new Date());
+      savedPost.setUpdatedAt(new Date());
+  
+      jest.spyOn(postRepository, "save").mockResolvedValue(savedPost);
+  
       const result = await postService.createPost(postCreateDto);
-      
-      expect(result).toEqual({
-        id: post.id.value,
-        authorId: post.authorId.value,
-        title: post.title.value,
-        content: post.content.value,
-        isPublished: post.isPublished,
-        createdAt: post.createdAt?.toISOString() ?? '',
-        updatedAt: post.updatedAt?.toISOString() ?? ''
-      });
+  
+      expect(result.id).toBe(savedPost.id.value);
+      expect(result.authorId).toBe(savedPost.authorId.value);
+      expect(result.title).toBe(savedPost.title.value);
+      expect(result.content).toBe(savedPost.content.value);
+      expect(result.isPublished).toBe(savedPost.isPublished);
+      expect(result.createdAt).toBeDefined();
+      expect(result.updatedAt).toBeDefined();
     });
   });
+  
 
   describe("getPostById", () => {
     it("should return post details if post exists", async () => {
@@ -82,16 +86,29 @@ describe("PostService", () => {
         title: post.title.value,
         content: post.content.value,
         isPublished: post.isPublished,
-        createdAt: post.createdAt?.toISOString() ?? '',
-        updatedAt: post.updatedAt?.toISOString() ?? ''
+        createdAt: post.createdAt?.toISOString(),
+        updatedAt: post.updatedAt?.toISOString()
       });
     });
   });
 
   describe("updatePost", () => {
     it("should update a post and return the updated post details", async () => {
+
+        const postUpdateDto: PostUpdateDto = {
+            title: "Updated Title",
+            content: "Updated Content",
+          };
+
+        const updatedPost = new Post(
+            post.id,
+            new Title(postUpdateDto.title as string),
+            new Content(postUpdateDto.content as string),
+            post.authorId,
+          );
+
       jest.spyOn(postRepository, "findById").mockResolvedValue(post);
-      jest.spyOn(postRepository, "save").mockResolvedValue(post);
+      jest.spyOn(postRepository, "save").mockResolvedValue(updatedPost);
 
       const result = await postService.updatePost(post.id, postUpdateDto);
 

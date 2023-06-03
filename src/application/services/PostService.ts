@@ -6,7 +6,7 @@ import { Title } from '../../domain/vo/Title';
 import { UserId } from '../../domain/vo/UserId';
 import { PostRepository } from '../../infrastructure/repositories/PostRepository'
 import { PostCreateDto } from '../dto/post/PostCreateDto';
-import { PostResponseDto } from '../dto/post/PostResonseDto';
+import { PostResponseDto } from '../dto/post/PostResponseDto';
 import { PostUpdateDto } from '../dto/post/PostUpdateDto';
 import { v4 as uuidv4 } from "uuid";
 
@@ -22,8 +22,8 @@ export class PostService {
       title: post.title.value,
       content: post.content.value,
       isPublished: post.isPublished,
-      createdAt: post.createdAt?.toISOString() ?? '',
-      updatedAt: post.updatedAt?.toISOString() ?? ''
+      createdAt: post.createdAt?.toISOString(),
+      updatedAt: post.updatedAt?.toISOString()
     };
   }
 

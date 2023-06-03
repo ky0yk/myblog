@@ -14,12 +14,16 @@ export class Post {
   private _updatedAt?: Date
 
 
-  constructor(id: PostId, title: Title, content: Content, authorId: UserId) {
-    this._id = id
-    this._title = title
-    this._content = content
-    this._authorId = authorId
-    this._isPublished = false
+  constructor(id: PostId, title: Title, content: Content, authorId: UserId);
+  constructor(id: PostId, title: Title, content: Content, authorId: UserId, isPublished: boolean, createdAt: Date, updatedAt: Date);
+  constructor(id: PostId, title: Title, content: Content, authorId: UserId, isPublished = false, createdAt?: Date, updatedAt?: Date) {
+    this._id = id;
+    this._title = title;
+    this._content = content;
+    this._authorId = authorId;
+    this._isPublished = isPublished;
+    this._createdAt = createdAt;
+    this._updatedAt = updatedAt;
   }
 
   updateWithDto(dto: PostUpdateDto): Post {

@@ -4,6 +4,6 @@ export interface PostResponseDto {
     title: string;
     content: string;
     isPublished: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }

@@ -25,16 +25,21 @@ import { PostRepository } from '../../src/infrastructure/repositories/PostReposi
 describe("PostRepository", () => {
   let postRepository: PostRepository;
   let prisma: PrismaClient;
+  let timestamp: Date
   let post: Post;
 
   beforeEach(() => {
     prisma = new PrismaClient();
     postRepository = new PostRepository(prisma);
+    timestamp = new Date();
     post = new Post(
       new PostId("someId"),
       new Title("Test Title"),
       new Content("Test Content"),
-      new UserId("testAuthorId")
+      new UserId("testAuthorId"),
+      false,
+      timestamp,
+      timestamp,
     );
   });
 
@@ -46,8 +51,8 @@ describe("PostRepository", () => {
         title: post.title.value,
         content: post.content.value,
         isPublished: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
       }]);
 
       const posts = await postRepository.findAll();
@@ -64,8 +69,8 @@ describe("PostRepository", () => {
         title: post.title.value,
         content: post.content.value,
         isPublished: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
       });
 
       const foundPost = await postRepository.findById(post.id);
@@ -90,8 +95,8 @@ describe("PostRepository", () => {
         title: post.title.value,
         content: post.content.value,
         isPublished: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
       });
 
       const savedPost = await postRepository.save(post);
