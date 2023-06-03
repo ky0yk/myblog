@@ -1,36 +1,69 @@
 import { Request, Response } from 'express';
+import { PostService } from '../../application/services/PostService';
 import { PostId } from '../../domain/vo/PostId';
-// import { PostPublishingService } from '../../domain/services/PostPublishingService';
+import { PostCreateDto } from '../../application/dto/post/PostCreateDto';
+import { PostUpdateDto } from '../../application/dto/post/PostUpdateDto';
 
 export class PostController {
-    // private postPublishingService: PostPublishingService;
-
-    // constructor(postPublishingService: PostPublishingService) {
-    //     this.postPublishingService = postPublishingService;
-    // }
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    constructor() {}
-
+    constructor(private postService: PostService) {}
+  
+    async getAllPosts(req: Request, res: Response): Promise<void> {
+      try {
+        const posts = await this.postService.getAllPosts();
+        res.json(posts);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
+    }
+  
+    async getPostById(req: Request, res: Response): Promise<void> {
+      try {
+        const id = new PostId(req.params.id);
+        const post = await this.postService.getPostById(id);
+        res.json(post);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
+    }
+  
     async createPost(req: Request, res: Response): Promise<void> {
-        res.json({ message: "Post created" });
+      try {
+        const postDto = req.body as PostCreateDto;
+        const post = await this.postService.createPost(postDto);
+        res.status(201).json(post);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
     }
-
-    async getPost(req: Request, res: Response): Promise<void> {
-        res.json({ message: "Single post retrieved", postId: req.params.postId });
-    }
-
+  
     async updatePost(req: Request, res: Response): Promise<void> {
-        res.json({ message: "Post updated", postId: req.params.postId });
+      try {
+        const id = new PostId(req.params.id);
+        const postDto = req.body as PostUpdateDto;
+        const post = await this.postService.updatePost(id, postDto);
+        res.json(post);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
     }
-
+  
     async deletePost(req: Request, res: Response): Promise<void> {
-        res.json({ message: "Post deleted", postId: req.params.postId });
+      try {
+        const id = new PostId(req.params.id);
+        await this.postService.deletePost(id);
+        res.sendStatus(204);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
     }
-
+  
     async publishPost(req: Request, res: Response): Promise<void> {
-        const postId: PostId = new PostId(req.params.postId);
-        // await this.postPublishingService.publish(postId);
-        res.json({ message: "Post published", postId: postId.value });
+      try {
+        const id = new PostId(req.params.id);
+        await this.postService.publish(id);
+        res.sendStatus(204);
+      } catch (err) {
+        res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
+      }
     }
-}
+  }
