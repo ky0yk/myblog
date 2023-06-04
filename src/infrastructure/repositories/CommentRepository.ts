@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Comment as PrismaComment } from "@prisma/client";
 import { PostId } from "../../domain/vo/PostId";
 import { CommentId } from "../../domain/vo/CommentId";
 import { ICommentRepository } from "../../domain/repositories/ICommentRepository";
@@ -19,7 +19,7 @@ export class CommentRepository implements ICommentRepository {
       where: { postId: postId.value },
     });
 
-    return results.map(result => this.toEntitiy(result));
+    return results.map(result => this.toEntity(result));
   }
 
   async findById(id: CommentId): Promise<Comment | null> {
@@ -31,7 +31,7 @@ export class CommentRepository implements ICommentRepository {
       return null;
     }
 
-    return this.toEntitiy(result);
+    return this.toEntity(result);
   }
 
   async save(comment: Comment): Promise<Comment> {
@@ -55,7 +55,7 @@ export class CommentRepository implements ICommentRepository {
       },
     });
 
-    return this.toEntitiy(savedRecord);
+    return this.toEntity(savedRecord);
   }
 
   async delete(id: CommentId): Promise<void> {
@@ -64,15 +64,16 @@ export class CommentRepository implements ICommentRepository {
     });
   }
 
-  private toEntitiy(commentRecord: any): Comment {
+  private toEntity(prismaComment: PrismaComment): Comment {
     const comment = new Comment(
-      new CommentId(commentRecord.id),
-      new CommentBody(commentRecord.body),
-      new UserId(commentRecord.authorId),
-      new PostId(commentRecord.postId)
+      new CommentId(prismaComment.id),
+      new CommentBody(prismaComment.body),
+      new UserId(prismaComment.authorId),
+      new PostId(prismaComment.postId)
     );
-    comment.setCreatedAt(new Date(commentRecord.createdAt));
-    comment.setUpdatedAt(new Date(commentRecord.updatedAt));
+    comment.setCreatedAt(new Date(prismaComment.createdAt));
+    comment.setUpdatedAt(new Date(prismaComment.updatedAt));
     return comment;
   }
+  
 }
