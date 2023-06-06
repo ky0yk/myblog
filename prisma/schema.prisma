@@ -12,11 +12,12 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   name     String
   password String
   posts    Post[]
+  comments Comment[]
 }
 
 model Post {
@@ -28,4 +29,16 @@ model Post {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   author      User     @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  body      String
+  authorId  String
+  postId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
 }
