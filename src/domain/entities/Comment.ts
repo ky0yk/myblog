@@ -1,3 +1,4 @@
+import { CommentUpdateDto } from "../../application/dto/comment/CommentUpdateDto";
 import { CommentBody } from "../vo/CommentBody";
 import { CommentId } from "../vo/CommentId";
 import { PostId } from "../vo/PostId";
@@ -22,6 +23,23 @@ export class Comment {
     this._authorId = authorId;
     this._postId = postId;
     // _createdAt and _updatedAt will be set when the instance is saved to the database.
+  }
+
+  updateWithDto(dto: CommentUpdateDto): Comment {
+    const updatedPost = new Comment(
+      this._id,
+      new CommentBody(dto.body),
+      this._authorId,
+      this._postId
+    )
+
+    if (this._createdAt !== undefined) {
+      updatedPost.setCreatedAt(this._createdAt)
+    }
+
+    updatedPost.setUpdatedAt(new Date())
+
+    return updatedPost
   }
 
   // Getters
