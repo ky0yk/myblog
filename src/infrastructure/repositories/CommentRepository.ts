@@ -75,5 +75,13 @@ export class CommentRepository implements ICommentRepository {
     comment.setUpdatedAt(new Date(prismaComment.updatedAt));
     return comment;
   }
-  
+
+  async findCommentsByPostId(postId: PostId): Promise<Comment[]> {
+    const prismaComments = await this.prisma.comment.findMany({
+      where: {
+        postId: postId.value,
+      },
+    })
+    return prismaComments.map(this.toEntity)
+  }
 }
